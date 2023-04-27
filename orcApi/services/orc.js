@@ -13,12 +13,11 @@ module.exports = class Orc {
             return {
                 statusCode: 400,
                 data: {
-                    status: true,
+                    status: false,
                     data: error.message
                 }
             }
         }
-
 
         let value = await htmlSyntax.text()
         let $ = cheerio.load(value)
@@ -40,12 +39,11 @@ module.exports = class Orc {
         let addData = await orcModel.addUrlData(urlData).catch((err) => {
             return { error: err }
         })
-        console.log(addData)
         if (!addData || addData.error) {
             return {
                 statusCode: 501,
                 data: {
-                    status: true,
+                    status: false,
                     data: addData.error.sqlMessage
                 }
             }
@@ -53,10 +51,42 @@ module.exports = class Orc {
         return {
             statusCode: 200,
             data: {
-                status: false,
+                status: true,
                 data: 'Data inserted'
             }
         }
+    }
+
+    async orcList() {
+        let data
+        try {
+            data = await orcModel.orcDataList()
+        } catch (error) {
+            return {
+                statusCode: 400,
+                data: {
+                    status: false,
+                    data: error.message
+                }
+            }
+        }
+        if (data.length == 0) {
+            return {
+                statusCode: 404,
+                data: {
+                    status: false,
+                    data: 'Not Found'
+                }
+            }
+        }
+        return {
+            statusCode: 200,
+            data: {
+                status: true,
+                data: data
+            }
+        }
+
     }
 }
 

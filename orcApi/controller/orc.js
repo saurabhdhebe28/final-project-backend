@@ -15,12 +15,23 @@ module.exports = class Orc {
         let add = await orcService.addUrl(request.body.url).catch((err) => {
             return { error: err }
         })
-        console.log(add)
         if (!add || add.error) {
             return response.status(add.statusCode).send(add.data)
         }
         return response.status(add.statusCode).send(add.data)
 
+    }
+
+    async orcList(request, response) {
+        // console.log(request.query.offset)
+        // let offset = request.query.offset ? request.query.offset : 0
+        let add = await orcService.orcList().catch((err) => {
+            return { error: err }
+        })
+        if (!add || add.error) {
+            return response.status(add.statusCode).send(add.data)
+        }
+        return response.status(add.statusCode).send(add.data)
     }
 }
 
