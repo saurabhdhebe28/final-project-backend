@@ -7,6 +7,7 @@ module.exports = class Orc {
     constructor() { }
 
     async urlData(request, response) {
+        // console.log(request.body)
         let rules = await orcRules.url()
         let validate = await new validatorjs(request.body, rules)
         if (validate.fails()) {
