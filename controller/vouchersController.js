@@ -25,4 +25,10 @@ module.exports = class voucherController {
             voucherResponse.error400(res, error);
         }
     }
+
+    async redeemVoucher(req,res){
+        const code = req.body.offerCode;
+        
+    
+      }
 }

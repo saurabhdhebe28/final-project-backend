@@ -1,8 +1,8 @@
 const validator = require("validatorjs");
-const offerFormatter = new (require('../formatter/offersFormatter'))
-const offerValidation = new (require('../validation/offersValidations'))
-const offerResponse = new (require('../responses/offersResponse'))
-const offerService = new (require('../services/offerService'))
+const offerFormatter = new (require('../formatter/offersFormatter'))();
+const offerValidation = new (require('../validation/offersValidations'))();
+const offerResponse = new (require('../responses/offersResponse'))();
+const offerService = new (require('../services/offerService'))();
 
 module.exports = class offerController {
   constructor() {}
@@ -26,5 +26,11 @@ module.exports = class offerController {
     } catch (error) {
       responses.error400(res, error);
     }
+  }
+
+  async redeemOffer(req,res){
+    const code = req.body.offerCode;
+    
+
   }
 };
