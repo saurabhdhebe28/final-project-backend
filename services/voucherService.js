@@ -1,20 +1,24 @@
-const config = require('../connection/config')
-const voucherResponse = require('../responses/voucherResponse')
+const config = require("../config");
+const voucherResponse = new(require("../responses/voucherResponse"))();
 
-module.exports = class voucherService{
-    constructor() {}
+module.exports = class voucherService {
+  constructor() {}
 
-    async addImage(req,res,result){
-        try{
-            let image
-            if(!req.files){
-                return voucherResponse.emptyFile(res)
-            }
-            image = result.voucherImage
+  async addImage(req, res) {
+    try {
+        let sampleFile;
+        let Path;
+        if (!req.files) {
+          return offerResponse.emptyFile(res);
         }
-        catch(error){
-            console.log(error)
-            res.status(500).send({status:false,message:error.message})
-        }
+        sampleFile = req.files.voucherImage;
+        Path = config.voucherUploadPath + sampleFile.name;
+        sampleFile.mv(Path, (err) => {
+          if (err) return responses.error500(res, err);
+          return console.log("added");
+        });
+    } catch (error) {
+      voucherResponse.error400(res,error)
     }
-}
+  }
+};

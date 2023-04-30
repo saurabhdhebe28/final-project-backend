@@ -1,7 +1,7 @@
 const express = require('express')
-const router = express.Router()
+const offerRoute = express.Router()
 const offerController = new (require('../controller/offersController')) ()
 
-router.post('createOffer',offerController.addOffer)
+offerRoute.post('/create-offer',offerController.addOffer)
 
-module.exports = router
+module.exports = offerRoute

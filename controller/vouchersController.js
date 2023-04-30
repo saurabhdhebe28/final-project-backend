@@ -9,26 +9,20 @@ module.exports = class voucherController {
     async addVoucher(req, res) {
         try {
             let data = voucherFormatter.addNewVoucher(req)
-            console.log(data,"hello");
-            console.log("hi");
             let rules = voucherValidator.addVoucher()
-            // console.log(rules)
             let validation = new validatorjs(data,rules)
-            console.log(validation.fails())
             if (validation.passes()) {
                 console.log("Validation passes");
-                voucherService.addImage(req, res, data)
+                voucherService.addImage(req, res)
                 return voucherResponse.voucherAdded(res, data)
             }
-            else if (validation.fails()) {
-                console.log('Validation fails')
-            }
             else {
+                console.log('Validation fails')
                 res.status(400).send({ status: false, message: 'Voucher not added', error: validation.errors })
             }
         }
         catch (error) {
-            res.status(500).send({ status: false, message: error.message })
+            voucherResponse.error400(res, error);
         }
     }
 }

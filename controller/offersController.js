@@ -9,17 +9,14 @@ module.exports = class offerController {
   async addOffer(req, res) {
     try {
       const result = offerFormatter.addProduct(req);
-      console.log(result);
-      console.log('good morning')
       const rules = offerValidation.addOffer();
       let validation = new validator(result, rules);
       if (validation.passes()) {
         console.log("it pass");
         offerService.addImg(req, res, result);
         return offerResponse.added(res, result);
-      } else if (validation.fails()) {
-        console.log("it falis");
-      } else {
+      }  else {
+        console.log('it fails');
         res.send({
           status: "false",
           message: "product not added",
