@@ -3,6 +3,7 @@ const offerFormatter = new (require('../formatter/offersFormatter'))
 const offerValidation = new (require('../validation/offersValidations'))
 const offerResponse = new (require('../responses/offersResponse'))
 const offerService = new (require('../services/offerService'))
+const offerModel = new (require('../model/offerModel'))
 
 module.exports = class offerController {
   constructor() {}
@@ -13,8 +14,10 @@ module.exports = class offerController {
       let validation = new validator(result, rules);
       if (validation.passes()) {
         console.log("it pass");
+        offerModel.add(result)
+
         offerService.addImg(req, res, result);
-        return offerResponse.added(res, result);
+        return offerResponse.offerAdded(res, result);
       }  else {
         console.log('it fails');
         res.send({
@@ -24,7 +27,7 @@ module.exports = class offerController {
         });
       }
     } catch (error) {
-      responses.error400(res, error);
+      offerResponse.error400(res, error);
     }
   }
 };

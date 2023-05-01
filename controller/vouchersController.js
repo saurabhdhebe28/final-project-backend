@@ -1,4 +1,5 @@
 const validatorjs = require('validatorjs')
+const voucherModel = new(require('../model/voucherModel'))
 const voucherFormatter = new (require('../formatter/vouchersFormatter'))()
 const voucherValidator = new (require('../validation/vouchersValidations'))
 const voucherResponse = new (require('../responses/voucherResponse'))()
@@ -13,6 +14,7 @@ module.exports = class voucherController {
             let validation = new validatorjs(data,rules)
             if (validation.passes()) {
                 console.log("Validation passes");
+                voucherModel.add(data)
                 voucherService.addImage(req, res)
                 return voucherResponse.voucherAdded(res, data)
             }
