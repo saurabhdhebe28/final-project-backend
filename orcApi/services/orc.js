@@ -1,17 +1,24 @@
 const cheerio = require('cheerio')
+let orcRules = new (require('../validator/orc'))
+const validatorjs = require('validatorjs')
 // const { val } = require('cheerio/lib/api/attributes')
 let orcModel = new (require('../model/orc'))
 let moment = require('moment')
+
+// const orcRules = require('../validator/orc')
 
 module.exports = class Orc {
     constructor() { }
     async addUrl(url) {
         let htmlSyntax
+        let value
         try {
             htmlSyntax = await fetch(url)
+
+            value = await htmlSyntax.text()
+
         } catch (error) {
             return {
-                statusCode: 400,
                 data: {
                     status: false,
                     data: error.message
@@ -19,9 +26,7 @@ module.exports = class Orc {
             }
         }
 
-        let value = await htmlSyntax.text()
         let $ = cheerio.load(value)
-
         let urlData = {
             requestedBy: $('#requestedByLabel').text().trim(),
             signedBy: $('#signedByLabel').text().trim(),
@@ -36,12 +41,21 @@ module.exports = class Orc {
             city: $('#cityLabel').text().trim(),
             transactionTypeCounter: $('#transactionTypeCounterLabel').text().trim()
         }
+        let rules = await orcRules.orcDataObject()
+        let validate = await new validatorjs(urlData, rules)
+        if (validate.fails()) {
+            return {
+                data: {
+                    status: false,
+                    data: 'This url doesnt contain the expected value please enter proper url'
+                }
+            }
+        }
         let addData = await orcModel.addUrlData(urlData).catch((err) => {
             return { error: err }
         })
         if (!addData || addData.error) {
             return {
-                statusCode: 501,
                 data: {
                     status: false,
                     data: addData.error.sqlMessage
@@ -49,7 +63,6 @@ module.exports = class Orc {
             }
         }
         return {
-            statusCode: 200,
             data: {
                 status: true,
                 data: 'Data inserted'
@@ -63,7 +76,6 @@ module.exports = class Orc {
             data = await orcModel.orcDataList()
         } catch (error) {
             return {
-                statusCode: 400,
                 data: {
                     status: false,
                     data: error.message
@@ -72,7 +84,6 @@ module.exports = class Orc {
         }
         if (data.length == 0) {
             return {
-                statusCode: 404,
                 data: {
                     status: false,
                     data: 'Not Found'
@@ -80,7 +91,6 @@ module.exports = class Orc {
             }
         }
         return {
-            statusCode: 200,
             data: {
                 status: true,
                 data: data
@@ -88,6 +98,29 @@ module.exports = class Orc {
         }
 
     }
+
+
+    async orcListWithSerach(param) {
+        let requestedBy = param.requestedBy ? param.requestedBy : ''
+        let tin = param.tin ? param.tin : ''
+        console.log(requestedBy, tin)
+        let search = await orcModel.OcrListBysearch(requestedBy, tin).catch((err) => {
+            return { error: err }
+        })
+        if (!search || search.error) {
+            return {
+                data: {
+                    status: false,
+                    data: search.error.sqlMessage
+                }
+            }
+        }
+        return {
+            data: {
+                status: true,
+                data: search
+            }
+        }
+    }
+   
 }
-
-

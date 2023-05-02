@@ -7,4 +7,20 @@ module.exports = class orcRules {
         }
         return returnData
     }
+
+    orcDataObject() {
+        let returnData = {
+            'requestedBy': 'required',
+            'signedBy': 'required',
+            'totalCounter': 'required',
+            'sdcTime': 'required|date',
+            'tin': 'required',
+            'locationName': 'required',
+            'totalAmount': 'required',
+            'address': 'required',
+            'city': 'required',
+            'transactionTypeCounter': 'required'
+        }
+        return returnData
+    }
 }

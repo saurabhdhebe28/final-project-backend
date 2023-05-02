@@ -12,8 +12,16 @@ create table orcData(
     transactionTypeCounter varchar(100) not null,
     createdAt datetime default current_timestamp,
     updatedAt datetime default current_timestamp on update current_timestamp
-
-
-
-
 )
+
+
+create table users(
+    -> id int primary key auto_increment not null,
+    -> firstName varchar(20) not null,
+    -> lastName varchar(20) not null,
+    -> emailId varchar(30) unique key not null,
+    -> mobileNumber varchar(10) not null,
+    -> password varchar(255) not null,
+    -> createdAt datetime default current_timestamp,
+    -> updatedAt datetime default current_timestamp on update  current_timestamp 
+    -> );

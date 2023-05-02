@@ -2,10 +2,14 @@ const express = require("express")
 const app = express()
 const cors = require('cors')
 require('dotenv').config()
-const { router } = require('../orcApi/route/orc')
+const { orcRouter } = require('../orcApi/routes/orc')
+const { authRouter } = require("./routes/userAuth")
 app.use(express.json())
 app.use(cors())
-app.use('/', router)
+
+app.use('/orc', orcRouter)
+
+app.use('/auth', authRouter)
 
 
 
