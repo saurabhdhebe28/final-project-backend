@@ -36,4 +36,8 @@ module.exports = class voucherModel{
             status: 'unavailable',
           }).then(()=>console.log('status updated to unavailable'))
       }
+      redeemList(){
+        return knex.select('*').from('offer').where('status','unavailable').then(()=>console.log('fetched all data succesfully by offerCode'))
+      }
+
 }

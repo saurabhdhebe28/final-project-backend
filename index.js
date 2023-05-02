@@ -1,6 +1,7 @@
 const express = require("express");
 const fileUpload = require("express-fileupload");
 const knex = require('./connection/knex')
+require('dotenv').config()
 
 const offerRoute = require("./rotues/offersRouter");
 const voucherRoute = require("./rotues/voucherRouter");

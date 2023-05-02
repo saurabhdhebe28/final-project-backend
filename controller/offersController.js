@@ -33,7 +33,7 @@ module.exports = class offerController {
     }
   }
 
-  async getOffers(req, res) {
+  async getOffers(req, res) {             
     try {
       const result = await offerModel.getAll();
       if (result) {
@@ -66,5 +66,15 @@ module.exports = class offerController {
     } catch (error) {
       offerResponse.error400(res,error);
     }
+  }
+
+  async redeemList(req,res){
+    try {
+      const result = await offerModel.redeemList();
+      res.send({status:'true',data:result,message:'redeemed datalist'})
+    } catch (error) {
+      offerResponse.error400(res,error)
+    }
+
   }
 };
