@@ -9,10 +9,10 @@ const app = express();
 app.use(fileUpload());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use("/offers", offerRoute);
+app.use("/offer", offerRoute);
 app.use("/voucher", voucherRoute);
 
-const port = 3000;
+const port = 3000 || (process.env.port)
 app.listen(port, () => {
-  console.log("server is listening on port 3000");
+  console.log(`Express port is running on ${port}`);
 });

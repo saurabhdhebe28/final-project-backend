@@ -16,6 +16,13 @@ voucherCode varchar(10),
 termsAndConditions text
 );
 select*from voucher;
+-- get all the voucher
+knex.select('*').from('voucher').then(()=>console.log('fetched all data succesfully'))
+-- grt voucher by code 
+knex.select('*').from('voucher').where('voucherCode', req.body.offerCode)-- .then(() => console.log('fetched all data succesfully by offerCode'))
+-- update status
+knex.select('*').from('offer').where('voucherCode', req.body.voucherCode).update({status: 'unavailable'})
+
 drop table voucher;
 
 create table offer(
@@ -31,6 +38,13 @@ amtLimit int,
 offerExpiryDate date,
 termsAndConditions text
 );
+
 select*from offer;
+-- get all offers
+knex.select('*').from('offer')-- .then(() => console.log('fetched all data succesfully'))
+-- get offer by code
+knex.select('*').from('offer').where('offerCode', req.body.offerCode)-- .then(() => console.log('fetched all data succesfully by offerCode'))
+-- update status
+knex.select('*').from('offer').where('offerCode', req.body.offerCode).update({status: 'unavailable'})
 drop table offer;
 
