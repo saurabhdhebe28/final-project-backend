@@ -4,6 +4,18 @@ const offerResponse = new (require("../responses/offersResponse"))();
 module.exports = class services {
   constructor() {}
 
+  async addData(req, res) {
+    try {
+      let data
+      let res=  offerResponse.offerAdded(data)
+      return res
+    }
+    catch (error) {
+      console.log(error)
+      res.status(500).send({ status: false, message: error.message })
+    }
+  }
+
   async addImg(req, res) {
     try {
       let sampleFile;
