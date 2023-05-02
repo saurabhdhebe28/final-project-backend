@@ -4,8 +4,8 @@ let Orc = new (require('../controller/orc'))
 let { CheckToken } = require('../middlewares/userAuth')
 
 
-orcRouter.post('/url', CheckToken, Orc.urlData)
-orcRouter.get('/orcList', CheckToken, Orc.orcList)
+orcRouter.post('/url', Orc.urlData)
+orcRouter.get('/orcList', Orc.orcList)
 orcRouter.get('/search', Orc.orcListWithSearch)
 
 

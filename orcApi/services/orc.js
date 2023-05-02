@@ -1,5 +1,5 @@
 const cheerio = require('cheerio')
-let orcRules = new (require('../validator/orc'))
+let orcRules = new (require('../validation/orc'))
 const validatorjs = require('validatorjs')
 // const { val } = require('cheerio/lib/api/attributes')
 let orcModel = new (require('../model/orc'))
@@ -103,7 +103,6 @@ module.exports = class Orc {
     async orcListWithSerach(param) {
         let requestedBy = param.requestedBy ? param.requestedBy : ''
         let tin = param.tin ? param.tin : ''
-        console.log(requestedBy, tin)
         let search = await orcModel.OcrListBysearch(requestedBy, tin).catch((err) => {
             return { error: err }
         })
@@ -122,5 +121,5 @@ module.exports = class Orc {
             }
         }
     }
-   
+
 }

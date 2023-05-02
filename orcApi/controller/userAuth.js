@@ -1,5 +1,5 @@
 let authFormatter = new (require('../formatter/userAuth'))
-let authRules = new (require('../validator/userAuth'))
+let authRules = new (require('../validation/userAuth'))
 let validatorjs = require('validatorjs')
 let userAuthService = new (require('../services/userAuth'))
 module.exports = class userAuthController {

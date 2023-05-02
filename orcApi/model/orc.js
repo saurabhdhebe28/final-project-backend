@@ -9,7 +9,7 @@ module.exports = class orcModel {
         return knex.select('requestedBy', 'signedBy', 'totalCounter', 'sdcTime', 'tin', 'locationName', 'address', 'totalAmount', 'city', 'transactionTypeCounter').from('orcData')
     }
     OcrListBysearch(requestedBy, tin) {
-        console.log(requestedBy, tin)
+
         if (requestedBy && tin) {
             console.log('And')
             return knex.select('requestedBy', 'signedBy', 'totalCounter', 'sdcTime', 'tin', 'locationName', 'address', 'totalAmount', 'city', 'transactionTypeCounter').from('orcData').where({
@@ -19,7 +19,7 @@ module.exports = class orcModel {
             })
         }
         if (requestedBy || tin) {
-            console.log('Or')
+
             return knex.select('requestedBy', 'signedBy', 'totalCounter', 'sdcTime', 'tin', 'locationName', 'address', 'totalAmount', 'city', 'transactionTypeCounter').from('orcData').where({
                 'requestedBy': requestedBy
             }).orWhere({

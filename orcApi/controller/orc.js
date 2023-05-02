@@ -2,7 +2,7 @@ const https = require('https')
 const cheerio = require('cheerio')
 let validatorjs = require('validatorjs')
 let userAuthService = new (require('../services/userAuth'))
-let orcRules = new (require('../validator/orc'))
+let orcRules = new (require('../validation/orc'))
 let orcService = new (require('../services/orc'))
 module.exports = class Orc {
     constructor() { }
