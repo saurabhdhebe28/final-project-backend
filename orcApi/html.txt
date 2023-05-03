@@ -1,0 +1,308 @@
+   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-lg-12 text-center centered">
+                <a target="_blank" href='/CustomerReport/P6KCQBWA-P6KCQBWA-53315/' class="btn btn-danger">       <i class="glyphicon glyphicon-flag"></i> Пријавите овај рачун</a>
+            </div>
+        </div>
+</form>
+
+
+            <hr />
+            <footer>
+                <p class="text-center"><strong>Copyright</strong> <a href="https://www.dti.rs">Data Tech International</a> &copy; 2012-2023</p>
+            </footer>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<!DOCTYPE html><html lang="sr-Cyrl-RS"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Провера рачуна - TaxCore</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/Content/css?v=CMJX9PRIaS5SVb54H9lSVbrx4oKUVuIKr17Q3CexgV41" rel="stylesheet">
+
+    <link href="/Content/theme?v=Mm3ZMcV7iDCQ7cGcjnV8tq9Px24VziKQ56i0KUxiItE1" rel="stylesheet">
+
+    <link href="/font-awesome/css?v=o4RQG0VyKe5KvT8vhAt1OmqJkZ2U6L2spbyAzU84zGo1" rel="stylesheet">
+
+    <script src="/bundles/jquery?v=DilzeZuJxdbQsfc_JOwsWB4VFDhTPM73urYeggaKdL81"></script>
+
+    <script src="/bundles/bootstrap?v=B2Aod10hsfpgprkQoCi898mBDbb-2dlSAOQz-A6MrX81"></script>
+
+
+    
+    <link href="/plugins/toastrStyles?v=9czft_r-CqghKeskuFwGAB-eQDMxtTqbQuPIWDCPfb01" rel="stylesheet">
+
+
+    <style>
+        .form-group {
+            display: grid;
+        }
+
+        .col-form-label {
+            font-weight: bold;
+        }
+    </style>
+
+    
+    <script src="/plugins/knockoutjs?v=8C2HZTEhg-4SlR23jR0VIRqK2jmCLEckMvQFq6wFpeY1"></script>
+
+    <script src="/plugins/verifyInvoice?v=U8x_rDhwFSxFQCDalDLkYUxSmV5CWGXyVB7riLhUi_g1"></script>
+
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            viewModel = new ViewModel();
+            ko.applyBindings(viewModel);
+            viewModel.InvoiceNumber('P6KCQBWA-P6KCQBWA-53315');
+            viewModel.Token('d13e91ca-24ea-450d-8842-1ae68f0141d4');
+
+            viewModel.IsNormalOrAdvance(true);
+                        viewModel.IsNormalSale(true);
+
+        });
+
+    </script>
+
+    <link href="/BotDetectCaptcha.ashx?get=layout-stylesheet&amp;amp;t=1682499600" rel="stylesheet" type="text/css">
+    <script type="text/javascript">
+        var rootPath = 'https://suf.purs.gov.rs/';
+        var lang = 'sr-Cyrl-RS';
+        var dateTimePickerFormat = 'dd.mm.yyyy. h:ii';
+        var showMeridianTime = false;
+    </script>
+</head>
+<body class="body-content">
+    <div class="container">
+        <div class="m-t-md">
+            <div class="row  mr-1 ml-1">
+                <h3 class="text-dark"><img src="/Content/Images/logo.png" alt="logo" height="25"> Провера рачуна</h3>
+
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a id="languagesSelect" href="#" class="nav-link dropdown-toggle pb-1 pt-1" data-toggle="dropdown"><img src="/Content/Images/Flags/sr-Cyrl-RS.png" alt="српски (Србија)" width="16"> српски (Србија)</a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                                <a href="/Home/ChangeLanguage/en-US" class="dropdown-item "><img src="/Content/Images/Flags/en-US.png" alt="English (United States)" width="16"> English (United States)</a>
+                                <a href="/Home/ChangeLanguage/sr-Cyrl-RS" class="dropdown-item  font-bold"><img src="/Content/Images/Flags/sr-Cyrl-RS.png" alt="српски (Србија)" width="16"> Српски (Србија)</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <hr>
+            
+
+<form action="/v/" method="post"><input name="__RequestVerificationToken" type="hidden" value="hhR1S8FMEACy5jqWj61Ge6LQMkzxyIaIdHPNqg0rBVflugZc3jBzCQ9KxB-QtpR9dirokP0kP9SjeJTYo-Ka6Id4deDokx4-MjVpT108DVo1">    <div class="row">
+        <div class="col-lg-12  text-center">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <i class="glyphicon glyphicon-info-sign"></i>
+                    Статус рачуна
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                                <label class="h2" for="" id="invoiceStatusLabel" style="margin-top:10px">Рачун је проверен</label>
+                            <br> <img src="/Content/Images/Verification/Valid.png" width="100" height="100">
+
+                            
+                        </div>
+                        <div class="col-md-12">
+
+                                    <span style="padding: 10px 0px">
+                                        <text>
+                                            <b>
+                                                Упоредите време издавања и износ промета на овој страни и на Вашем рачуну. У случају неједнакости, <a target="_blank" href="/CustomerReport/P6KCQBWA-P6KCQBWA-53315/">пријавите случај пореској управи.</a>                                            </b>
+                                        </text>
+                                    </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 text-center">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <i class="glyphicon glyphicon-arrow-right"></i>
+                    Захтев за фискализацију рачуна
+                </div>
+                <div class="panel-body">
+                        <div class="form-group">
+                            <label class="col-form-label">ПИБ</label>
+                            <div class="col-md-12">
+                                <span id="tinLabel">
+                                103882837
+                                <span>
+                            </span></span></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-form-label">Име продајног места</label>
+                            <div class="col-md-12">
+                                <span id="shopFullNameLabel">1005596-Zara Galerija</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Адреса</label>
+                            <div class="col-md-12">
+                                <span id="addressLabel">БУЛ��ВАР ВУДРОА ВИЛСОНА 12   </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Град</label>
+                            <div class="col-md-12">
+                                <span id="cityLabel">БЕОГРАД (САВСКИ ВЕНАЦ)</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Општина</label>
+                            <div class="col-md-12">
+                                <span id="administrativeUnitLabel">Београд-Савски Венац</span>
+                            </div>
+                        </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label">ИД купца</label>
+                        <div class="col-md-12">
+                            <span id="buyerIdLabel">
+                                
+                           </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label">Затражио</label>
+                        <div class="col-md-12">
+                            <span id="requestedByLabel">
+                                P6KCQBWA
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label" for="">Врста</label>
+                        <div class="col-md-12">
+                            <span id="invoiceTypeId">Промет</span>
+                            <span id="transactionTypeId">Продаја</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 text-center">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <i class="glyphicon glyphicon-arrow-left"></i>
+                    Резултат фискализације рачуна
+                </div>
+                <div class="panel-body">
+
+                    <div class="form-group">
+                        <label class="col-form-label">Укупан износ</label>
+                        <div class="col-md-12">
+                            <span id="totalAmountLabel">
+                                2.800,00
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label">Бројач по врсти трансакције</label>
+                        <div class="col-md-12">
+                            <span id="transactionTypeCounterLabel">
+                                49015
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label">Бројач укупног броја</label>
+                        <div class="col-md-12">
+                            <span id="totalCounterLabel">
+                                53315
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label">Екстензија бројача рачуна</label>
+                        <div class="col-md-12">
+                            <span id="invoiceCounterExtensionLabel">
+                                ПП
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label">Затражио - Потписао - Бројач</label>
+                        <div class="col-md-12">
+                            <span id="invoiceNumberLabel">
+                                P6KCQBWA-P6KCQBWA-53315
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label">Потписао</label>
+                        <div class="col-md-12">
+                            <span id="signedByLabel">
+                                P6KCQBWA
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label">ПФР време (временска зона сервера)</label>
+                        <div class="col-md-12">
+                            <span id="sdcDateTimeLabel">
+                                18.04.2023. 15:54:30
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-12 text-center centered">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse3"><i class="glyphicon glyphicon-list-alt"></i> Журнал</a>
+                    </h4>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse">
+                    <div class="panel-body">
+
+
+
+
+                    requestedByLabel,signedByLabel,totalCounterLabel,
+                    sdcDateTimeLabel
+                    transactionTypeCounterLabel
+                    tinLabel
+                    shopFullNameLabel  = location
+
+                    addressLabel
+                    cityLabel
+                    transactionTypeCounterLabel
+                    
+
+
+                    
