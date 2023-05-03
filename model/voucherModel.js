@@ -1,3 +1,4 @@
+// const knex = require('../connection/knex')
 let { knex } = require('../config/dbconfig')
 
 module.exports = class voucherModel {
