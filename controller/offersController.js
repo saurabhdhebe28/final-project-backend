@@ -9,6 +9,8 @@ module.exports = class offerController {
   constructor() {}
   async addOffer(req, res) {
     try {
+      console.log(req.body,'body');
+      console.log(req.files,'files');
       const result = offerFormatter.addProduct(req);
       const rules = offerValidation.addOffer();
       let validation = new validator(result, rules);
