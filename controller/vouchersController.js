@@ -40,41 +40,69 @@ module.exports = class voucherController {
     }
   }
 
+  // async purcahseList(req,res){
+  //   try {
+  //     let data = await voucherModel.getpurchase()
+  //     console.log(data);
+  //     if(data){
+  //       offerResponse.success(res,data)
+  //     }
+  //     else{
+  //       res.send({status:'false',message:'No purchase has made'})
+  //     }
+  //   } catch (error) {
+      
+  //   }
+  // }
+
   async purcahseList(req,res){
     try {
-      let data = await voucherModel.getpurchase()
-      console.log(data);
-      if(data){
-        offerResponse.success(res,data)
-      }
-      else{
-        res.send({status:'false',message:'No purchase has made'})
-      }
-    } catch (error) {
-      
-    }
-  }
-
-  async redeemVoucher(req, res) {
-    try {
       const result = await voucherModel.getByCode(req);
-      if (result.length !=0) {
-
-        if (result[0].status == 'Available') {
-          console.log('hello')
+      console.log('in redeem',result);
+      if(result){
+        if(result[0].status=='Available'){
           await voucherModel.updateStatus(req);
-          const data = await voucherModel.getRedeemList()
-          res.send({ status: 'true', data, message: 'Voucher redeemed succesfully' })
-        } else if (result[0].status == 'Unavailable') {
-          const data = await voucherModel.getRedeemList()
-          res.send({ status: 'true',data, message: 'Voucher already redeemed' })
+          const data = await voucherModel.getAll()
+          res.send({status:'true',data,message:'redeemed succesfully'})
+        }else if(result[0].status=='Unavailable'){
+          res.send({status:'true',data,message:'already redeemed'})
         }
-      
       } else {
         res.send({ status: 'true', message: 'Voucher Code Not Found' })
       }
     } catch (error) {
-      voucherResponse.error400(res, error);
+      offerResponse.error400(res, error);
     }
   }
+  async redeemVoucher(req,res){
+    try {
+      const result = await voucherModel.getRedeemList();
+      res.send({status:'true',data:result,message:'redeemed data list for voucher'})
+    } catch (error) {
+      offerResponse.error400(res,error)
+    }
+
+  }
+  // async redeemVoucher(req, res) {
+  //   try {
+  //     const result = await voucherModel.getByCode(req);
+  //     if (result.length !=0) {
+
+  //       if (result[0].status == 'Available') {
+  //         console.log('hello')
+  //         await voucherModel.updateStatus(req);
+  //         const data = await voucherModel.getRedeemList()
+  //         res.send({ status: 'true', data, message: 'Voucher redeemed succesfully' })
+  //       } else if (result[0].status == 'Unavailable') {
+  //         const data = await voucherModel.getRedeemList()
+  //         res.send({ status: 'true',data, message: 'Voucher already redeemed' })
+  //       }
+      
+  //     } else {
+  //       res.send({ status: 'true', message: 'Voucher Code Not Found' })
+  //     }
+  //   } catch (error) {
+  //     voucherResponse.error400(res, error);
+  //   }
+  // }
 };

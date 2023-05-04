@@ -4,8 +4,9 @@ const knex = require('./connection/knex')
 const cors = require('cors')
 require('dotenv').config()
 
-const offerRoute = require("./rotues/offersRouter");
-const voucherRoute = require("./rotues/voucherRouter");
+const offerRoute = require("./routes/offersRouter");
+const voucherRoute = require("./routes/voucherRouter");
+
 const app = express();
 app.use(cors())
 

@@ -17,11 +17,7 @@ module.exports = class voucherModel {
       denominationEnd: result.denominationEnd,
       voucherExpiryDate: result.voucherExpiryDate,
       voucherCode: result.voucherCode,
-      termsAndConditions: result.termsAndConditions,
-      status: 'available'
-      //after login
-      //firstName:userData.firstName,
-      //firstName:userData.lastName
+      termsAndConditions: result.termsAndConditions    
     }).then(() => console.log('data added in voucher table'))
   }
 
