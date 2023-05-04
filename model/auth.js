@@ -1,4 +1,4 @@
-let { knex } = require('../config/dbconfig')
+let knex = require('../connection/knex')
 module.exports = class userAuthModel {
     constructor() { }
 

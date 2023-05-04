@@ -1,10 +1,11 @@
+require('dotenv').config()
 const config = {
     port: 3306,
-    mysql2: {
-        "host": "localhost",
-        "user": "root",
-        "password": "Admin@123",
-        "database": "finalProject"
+    mysql: {
+        "host": process.env.DBHOST,
+        "user": process.env.DBUSER,
+        "password": process.env.DBPASSWORD,
+        "database": process.env.DBNAMEs
     }
 }
 module.exports = config

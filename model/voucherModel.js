@@ -1,5 +1,5 @@
-// const knex = require('../connection/knex')
-let { knex } = require('../config/dbconfig')
+const knex = require('../connection/knex')
+
 
 module.exports = class voucherModel {
     constructor() { }
