@@ -14,10 +14,7 @@ module.exports = class offerController {
       let validation = new validator(result, rules);
       if (validation.passes()) {
         console.log("it pass");
-         //get firstname ,lastname from localstorage
-      // const userData = localStorage.get('userData')
-        offerModel.add(result);  //ye hata baad mein login signup ke baad
-        // offerModel.add(result,userData);
+        offerModel.add(result);  
         offerService.addImg(req, res, result);
         return offerResponse.offerAdded(res, result);
       } else {
@@ -52,12 +49,13 @@ module.exports = class offerController {
   async redeemOffer(req,res){
     try {
       const result = await offerModel.getByCode(req);
+      console.log('in redem',result);
       if(result){
-        if(result.status=='available'){
+        if(result[0].status=='Available'){
           await offerModel.updateStatus(req);
           const data = await offerModel.getAll()
           res.send({status:'true',data,message:'redeemed succesfully'})
-        }else if(result.status=='unavailable'){
+        }else if(result[0].status=='Unavailable'){
           res.send({status:'true',data,message:'already redeemed'})
         }
       }else{
