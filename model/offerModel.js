@@ -30,6 +30,22 @@ module.exports = class voucherModel {
     .where("offerCode", req.body.offerCode)
   }
 
+  purchase(req){
+    return knex('purchase_offer').insert({
+      user_id:req.body.userId,
+      offer_id:req.body.offerId,
+      status:'Available'
+    })
+  }
+
+  checkUser(req){
+    return knex('users').select('*').where({id:req.body.userId})
+  }
+
+  checkOffer(req){
+    return knex('offer').select('*').where({offer_id:req.body.offerId})
+  }
+
   updateStatus(req) {
     console.log(req.body,'dfghjkl;kjhg');
     return knex('offer')

@@ -42,6 +42,23 @@ module.exports = class offerController {
     }
   }
 
+  async purchase(req,res){
+    try {
+      const userInfo = await offerModel.checkUser(req);
+      const offerInfo = await offerModel.checkOffer(req);
+
+      if(userInfo && offerInfo ){
+        await offerModel.purchase(req);
+        return res.status(200).json({status:true,message:'data added succesfully in Assigned table'})
+      }else{
+        return res.status(404).json({status:true,message:'invalid id for user or offer'})
+        
+      }
+    } catch (error) {
+      offerResponse.error400(res,error)
+    }
+  }
+
   async purcahseList(req,res){
     try {
       const result = await offerModel.getByCode(req);
