@@ -1,4 +1,6 @@
+const { voucherUploadPath } = require('../config')
 const knex = require('../connection/knex')
+const userAuthController = require('../controller/userController')
 
 module.exports = class voucherModel {
   constructor() { }
@@ -24,13 +26,20 @@ module.exports = class voucherModel {
   }
 
   getAll() {
-    return knex.select('*').from('offer').then(() => console.log('Offer list'))
+    return knex.select('*').from('offer')
+  }
+
+  getByStatus() {
+    return knex.select('*').from('offer').where('status', 'unavailable').then(() => console.log('Offer list by OfferCode'))
   }
 
   getByCode(req) {
     return knex.select('*').from('offer').where('offerCode', req.body.offerCode).then(() => console.log('Offer list by OfferCode'))
   }
 
+  getpurchase(){
+    knex.select('*').from('users').leftJoin('purchase_voucher', 'users.id', '=', 'purchase_voucher.user_id').leftJoin('voucher', 'purchase_voucher.voucher_id', '=', 'voucher.voucher_id');
+    }
   updateStatus() {
     return knex.select('*').from('offer').where('offerCode', req.body.offerCode).update({
       status: 'unavailable',

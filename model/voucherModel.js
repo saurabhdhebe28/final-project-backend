@@ -26,16 +26,26 @@ module.exports = class voucherModel {
   }
 
   getAll() {
-    return knex.select('*').from('voucher').then(() => console.log('Voucher list'))
+    return knex.select('*').from('voucher')
   }
 
   getByCode(req) {
-    return knex.select('*').from('voucher').where('voucherCode', req.body.offerCode).then(() => console.log('Voucher list by voucher code'))
+    return knex.select('*').from('voucher').where('voucherCode', req.body.voucherCode)
   }
 
-  updateStatus() {
-    return knex.select('*').from('offer').where('voucherCode', req.body.voucherCode).update({
-      status: 'unavailable',
-    }).then(() => console.log('Voucher unavailable'))
+  getpurchase() {
+    return knex.select('*').from('users').innerJoin('purchase_voucher', 'users.id','purchase_voucher.user_id').innerJoin('voucher', 'purchase_voucher.voucher_id', 'voucher.voucher_id');
+  }
+
+  getRedeemList() {
+    return knex.select('*').from('users').innerJoin('purchase_voucher', 'users.id', 'purchase_voucher.user_id').innerJoin('voucher', 'purchase_voucher.voucher_id',  'voucher.voucher_id').where({status:'Unavailable'})
+  }
+  updateStatus(req) {
+    return knex('voucher')
+    .where('voucherCode', '=', req.body.voucherCode)
+    .update({
+      status: 'Unavailable',
+    })
+   .then(()=>console.log('updated status'))
   }
 }

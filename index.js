@@ -1,14 +1,15 @@
 const express = require("express");
 const fileUpload = require("express-fileupload");
 const knex = require('./connection/knex')
-
-const offerRoute = require("./rotues/offersRouter");
-const voucherRoute = require("./rotues/voucherRouter");
+const cors = require('cors')
+const offerRoute = require("./routes/offersRouter");
+const voucherRoute = require("./routes/voucherRouter");
 const app = express();
-
+app.use(cors())
 app.use(fileUpload());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
 app.use("/offer", offerRoute);
 app.use("/voucher", voucherRoute);
 

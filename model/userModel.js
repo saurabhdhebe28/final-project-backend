@@ -8,5 +8,4 @@ module.exports = class userAuthModel {
     getUserByEmail(email) {
         return knex.select('id', 'firstName', 'lastName', 'emailId', 'mobileNumber', 'password').from('users').where('emailId', email)
     }
-
 }

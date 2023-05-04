@@ -14,10 +14,7 @@ module.exports = class voucherController {
       let validation = new validatorjs(data, rules);
       if (validation.passes()) {
         console.log("Voucher added and validation passes");
-        //get firstname ,lastname from localstorage
-        // const userData = localStorage.get('userData')
-        voucherModel.add(data);  //ye hata baad mein login signup ke baad
-        // voucherModel.add(result,userData);
+        voucherModel.add(data); 
         voucherService.addImage(req, res);
         return voucherResponse.voucherAdded(res, data);
       } else {
@@ -29,30 +26,50 @@ module.exports = class voucherController {
     }
   }
 
-  async getVouchers(req, res) {
+  async getVoucher(req, res) {
     try {
       const result = await voucherModel.getAll();
+      console.log(result);
       if (result) {
-        voucherResponse.success(res, result);
+        voucherResponse.success(res,result);
       } else {
-        res.send({status: "false",message: "No voucher available in Voucher Table"});
+        res.send({ status: "false", message: "No voucher in voucher Table" });
       }
     } catch (error) {
       voucherResponse.error400(res, error);
     }
   }
 
+  async purcahseList(req,res){
+    try {
+      let data = await voucherModel.getpurchase()
+      console.log(data);
+      if(data){
+        offerResponse.success(res,data)
+      }
+      else{
+        res.send({status:'false',message:'No purchase has made'})
+      }
+    } catch (error) {
+      
+    }
+  }
+
   async redeemVoucher(req, res) {
     try {
       const result = await voucherModel.getByCode(req);
-      if (result) {
-        if (result.status == 'available') {
+      if (result.length !=0) {
+
+        if (result[0].status == 'Available') {
+          console.log('hello')
           await voucherModel.updateStatus(req);
-          const data = await voucherModel.getAll()
+          const data = await voucherModel.getRedeemList()
           res.send({ status: 'true', data, message: 'Voucher redeemed succesfully' })
-        } else if (result.status == 'unavailable') {
-          res.send({ status: 'true', data, message: 'Voucher already redeemed' })
+        } else if (result[0].status == 'Unavailable') {
+          const data = await voucherModel.getRedeemList()
+          res.send({ status: 'true',data, message: 'Voucher already redeemed' })
         }
+      
       } else {
         res.send({ status: 'true', message: 'Voucher Code Not Found' })
       }

@@ -1,7 +1,7 @@
 const config = require('./config')
 
 const knex = require('knex') ({
-    client:"mysql",
+    client:"mysql2",
     connection:{
         port:config.port,
         host:config.mysql.host,
