@@ -1,7 +1,8 @@
 const knex = require('../connection/knex')
 
-module.exports = class voucherModel{
-    constructor() {}
+
+module.exports = class voucherModel {
+    constructor() { }
 
     add(result) {               //after login change it to add(result,userData){
         console.log('in offer model')
@@ -12,30 +13,30 @@ module.exports = class voucherModel{
             pointRate: result.pointRate,
             merchants: result.merchants,
             brands: result.brands,
-            denominationStep:result.denominationStep,
+            denominationStep: result.denominationStep,
             denominationStart: result.denominationStart,
             denominationEnd: result.denominationEnd,
-            voucherExpiryDate:result.voucherExpiryDate,
-            voucherCode:result.voucherCode,
-            termsAndConditions:result.termsAndConditions,
-            status:'available'
+            voucherExpiryDate: result.voucherExpiryDate,
+            voucherCode: result.voucherCode,
+            termsAndConditions: result.termsAndConditions,
+            status: 'available'
             //after login
             //firstName:userData.firstName,
             //firstName:userData.lastName
-        }).then(()=>console.log('data added'))
-      }
+        }).then(() => console.log('data added'))
+    }
 
-      getAll(){
-        return knex.select('*').from('voucher').then(()=>console.log('fetched all data succesfully'))
-      }
+    getAll() {
+        return knex.select('*').from('voucher').then(() => console.log('fetched all data succesfully'))
+    }
 
-      getByCode(req){
-        return knex.select('*').from('voucher').where('voucherCode',req.body.offerCode).then(()=>console.log('fetched all data succesfully by offerCode'))
-      }
+    getByCode(req) {
+        return knex.select('*').from('voucher').where('voucherCode', req.body.offerCode).then(() => console.log('fetched all data succesfully by offerCode'))
+    }
 
-      updateStatus(){
-        return  knex.select('*').from('offer').where('voucherCode',req.body.voucherCode).update({
+    updateStatus() {
+        return knex.select('*').from('offer').where('voucherCode', req.body.voucherCode).update({
             status: 'unavailable',
-          }).then(()=>console.log('status updated to unavailable'))
-      }
+        }).then(() => console.log('status updated to unavailable'))
+    }
 }
