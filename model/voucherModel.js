@@ -4,7 +4,7 @@ const knex = require('../connection/knex')
 module.exports = class voucherModel {
     constructor() { }
 
-    add(result) {               //after login change it to add(result,userData){
+    add(result) {
         console.log('in offer model')
         console.log('in voucher model')
         return knex("voucher").insert({
@@ -18,25 +18,21 @@ module.exports = class voucherModel {
             denominationEnd: result.denominationEnd,
             voucherExpiryDate: result.voucherExpiryDate,
             voucherCode: result.voucherCode,
-            termsAndConditions: result.termsAndConditions,
-            status: 'available'
-            //after login
-            //firstName:userData.firstName,
-            //firstName:userData.lastName
+            termsAndConditions: result.termsAndConditions
         }).then(() => console.log('data added'))
     }
 
     getAll() {
-        return knex.select('*').from('voucher').then(() => console.log('fetched all data succesfully'))
+        return knex.select('*').from('voucher')
     }
 
     getByCode(req) {
-        return knex.select('*').from('voucher').where('voucherCode', req.body.offerCode).then(() => console.log('fetched all data succesfully by offerCode'))
+        return knex.select('*').from('voucher').where('voucherCode', req.body.offerCode)
     }
 
     updateStatus() {
         return knex.select('*').from('offer').where('voucherCode', req.body.voucherCode).update({
             status: 'unavailable',
-        }).then(() => console.log('status updated to unavailable'))
+        })
     }
 }

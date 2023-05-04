@@ -9,13 +9,16 @@ module.exports = class offerController {
   constructor() {}
   async addOffer(req, res) {
     try {
+      console.log("body",req.body);
+      console.log("files",req.files);
+
       const result = offerFormatter.addProduct(req);
       const rules = offerValidation.addOffer();
       let validation = new validator(result, rules);
       if (validation.passes()) {
         console.log("it pass");
-        offerModel.add(result);  
-        offerService.addImg(req, res, result);
+       await offerModel.add(result);  
+        await offerService.addImg(req, res, result);
         return offerResponse.offerAdded(res, result);
       } else {
         console.log("it fails");

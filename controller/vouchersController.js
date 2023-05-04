@@ -69,4 +69,13 @@ module.exports = class voucherController {
         voucherResponse.error400(res,error);
     }
   }
+  async redeemList(req,res){
+    try {
+      const result = await voucherModel.redeemList();
+      res.send({status:'true',data:result,message:'redeemed datalist'})
+    } catch (error) {
+      offerResponse.error400(res,error)
+    }
+
+  }
 };

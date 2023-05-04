@@ -18,7 +18,6 @@ module.exports = class voucherModel {
         amtLimit: result.limit,
         offerExpiryDate: result.offerExpiry,
         termsAndConditions: result.termsAndConditions,
-        status: "available",
       })
   }
 
