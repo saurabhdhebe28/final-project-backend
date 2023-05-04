@@ -32,6 +32,7 @@ module.exports = class userAuthController {
         let login = await userAuthService.login(data).catch((err) => {
             return { error: err }
         })
+
         if (!login || login.error) {
             return response.send(login.data)
         }

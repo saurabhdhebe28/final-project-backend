@@ -11,7 +11,6 @@ async function CheckToken(request, response, next) {
         let payload = jwt.verify(request.headers.token, process.env.JWTPRIVATEKEY)
         let data = await userAuthModel.getUserById(payload)
         request.userData = data[0]
-        console.log(request.userData)
         next()
     } catch (error) {
         return response.send({ status: false, data: 'Token Not valid' })

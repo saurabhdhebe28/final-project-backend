@@ -9,6 +9,7 @@ module.exports = class Orc {
 
     async urlData(request, response) {
         // console.log(request.body)
+        console.log(request.headers.token)
         let rules = await orcRules.url()
         let validate = await new validatorjs(request.body, rules)
         if (validate.fails()) {
@@ -25,8 +26,6 @@ module.exports = class Orc {
     }
 
     async orcList(request, response) {
-        // console.log(request.query.offset)
-        // let offset = request.query.offset ? request.query.offset : 0
         let add = await orcService.orcList().catch((err) => {
             return { error: err }
         })

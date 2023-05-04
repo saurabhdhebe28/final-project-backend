@@ -61,6 +61,7 @@ module.exports = class userAuthService {
         let checkUser = await userAuthModel.getUserByEmail(param.emailId).catch((err) => {
             return { error: err }
         })
+        console.log(checkUser)
         if (!checkUser || checkUser.error) {
             return {
                 data: {
