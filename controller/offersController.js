@@ -16,10 +16,7 @@ module.exports = class offerController {
       let validation = new validator(result, rules);
       if (validation.passes()) {
         console.log("it pass");
-         //get firstname ,lastname from localstorage
-      // const userData = localStorage.get('userData')
-        offerModel.add(result);  //ye hata baad mein login signup ke baad
-        // offerModel.add(result,userData);
+        offerModel.add(result);  
         offerService.addImg(req, res, result);
         return offerResponse.offerAdded(res, result);
       } else {
