@@ -6,16 +6,16 @@ const offerService = new (require("../services/offerService"))();
 const offerModel = new (require("../model/offerModel"))();
 
 module.exports = class offerController {
-  constructor() {}
+  constructor() { }
   async addOffer(req, res) {
     try {
-      const result = offerFormatter.addProduct(req);
-      const rules = offerValidation.addOffer();
+      const result = await offerFormatter.addProduct(req);
+      const rules = await offerValidation.addOffer();
       let validation = new validator(result, rules);
       if (validation.passes()) {
         console.log("it pass");
-        offerModel.add(result);  
-        offerService.addImg(req, res, result);
+        await offerModel.add(result);
+        await offerService.addImg(req, res, result);
         return offerResponse.offerAdded(res, result);
       } else {
         console.log("it fails");
@@ -30,7 +30,7 @@ module.exports = class offerController {
     }
   }
 
-  async getOffers(req, res) {             
+  async getOffers(req, res) {
     try {
       const result = await offerModel.getAll();
       if (result) {
@@ -46,32 +46,32 @@ module.exports = class offerController {
     }
   }
 
-  async redeemOffer(req,res){
+  async redeemOffer(req, res) {
     try {
       const result = await offerModel.getByCode(req);
-      console.log('in redem',result);
-      if(result){
-        if(result[0].status=='Available'){
+      console.log('in redem', result);
+      if (result) {
+        if (result[0].status == 'Available') {
           await offerModel.updateStatus(req);
           const data = await offerModel.getAll()
-          res.send({status:'true',data,message:'redeemed succesfully'})
-        }else if(result[0].status=='Unavailable'){
-          res.send({status:'true',data,message:'already redeemed'})
+          res.send({ status: 'true', data, message: 'redeemed succesfully' })
+        } else if (result[0].status == 'Unavailable') {
+          res.send({ status: 'true', data, message: 'already redeemed' })
         }
-      }else{
-        res.send({status:'true',message:'Offer Code Not Found'})
+      } else {
+        res.send({ status: 'true', message: 'Offer Code Not Found' })
       }
     } catch (error) {
-      offerResponse.error400(res,error);
+      offerResponse.error400(res, error);
     }
   }
 
-  async redeemList(req,res){
+  async redeemList(req, res) {
     try {
       const result = await offerModel.redeemList();
-      res.send({status:'true',data:result,message:'redeemed datalist'})
+      res.send({ status: 'true', data: result, message: 'redeemed datalist' })
     } catch (error) {
-      offerResponse.error400(res,error)
+      offerResponse.error400(res, error)
     }
 
   }

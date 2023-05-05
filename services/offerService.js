@@ -10,6 +10,7 @@ module.exports = class services {
       let res=  offerResponse.offerAdded(data)
       return res
     }
+   
     catch (error) {
       console.log(error)
       res.status(500).send({ status: false, message: error.message })
