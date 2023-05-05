@@ -40,21 +40,6 @@ module.exports = class voucherController {
     }
   }
 
-  // async purcahseList(req,res){
-  //   try {
-  //     let data = await voucherModel.getpurchase()
-  //     console.log(data);
-  //     if(data){
-  //       offerResponse.success(res,data)
-  //     }
-  //     else{
-  //       res.send({status:'false',message:'No purchase has made'})
-  //     }
-  //   } catch (error) {
-      
-  //   }
-  // }
-
   async purcahseList(req,res){
     try {
       const result = await voucherModel.getByCode(req);
@@ -74,6 +59,7 @@ module.exports = class voucherController {
       offerResponse.error400(res, error);
     }
   }
+  
   async redeemVoucher(req,res){
     try {
       const result = await voucherModel.getRedeemList();
