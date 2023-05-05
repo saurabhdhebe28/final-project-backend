@@ -9,6 +9,7 @@ password varchar(200) not null,
 craetedAt datetime default current_timestamp,
 updatedAT datetime default current_timestamp on update current_timestamp
 );
+insert into users (firstName,lastName,emailID,mobileNumber,password)values('mohif','waghu','mohif@gmail.com','8097569616','mohif9232')
 
 
 
@@ -27,6 +28,8 @@ termsAndConditions text,
 createdAt datetime default current_timestamp,
 updatedAt datetime default current_timestamp on update current_timestamp
 );
+insert into offer (offerTitle,offerImage,offerCode,merchants,brands,offerType,minAmount,amtLimit,offerExpiryDate,termsAndCondition)values('diwaliOffer','img','dil200','flipkart','Nike','pin','100','1000',20/05/2022,'Only for new Users');
+
 
 create table purchase_offer(
 purchase_offer_id int primary key auto_increment not null,
@@ -38,6 +41,7 @@ updatedAt datetime default current_timestamp on update current_timestamp,
 foreign key (user_id) references users(id),
 foreign key (offer_id) references offer(offer_id)
 );
+insert into purchase_offer(user_id,offer_id,status) values(1,1,'Available');
 
 
 
@@ -57,6 +61,7 @@ termsAndConditions text,
 createdAt datetime default current_timestamp,
 updatedAt datetime default current_timestamp on update current_timestamp
 );
+insert into offer (offerTitle,offerImage,offerCode,merchants,brands,offerType,minAmount,amtLimit,offerExpiryDate,termsAndCondition)values('diwaliOffer','img','dil200','flipkart','Nike','pin','100','1000',20/05/2022,'Only for new Users');
 
 
 create table purchase_voucher(
@@ -69,6 +74,5 @@ updatedAt datetime default current_timestamp on update current_timestamp,
 foreign key (user_id) references users(id),
 foreign key (voucher_id) references voucher(voucher_id)
 );
-
-
+insert into purchase_voucher(user_id,voucher_id,status) values(1,1,'Available');
 
