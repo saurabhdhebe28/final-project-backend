@@ -13,12 +13,10 @@ module.exports = class voucherController {
       let rules = await voucherValidator.addVoucher();
       let validation = new validatorjs(data, rules);
       if (validation.passes()) {
-        console.log("Validation passes");
-        voucherModel.add(data); 
-        voucherService.addImage(req, res);
+       await voucherModel.add(data); 
+        await voucherService.addImage(req, res);
         return voucherResponse.voucherAdded(res, data);
       } else {
-        console.log("Validation fails");
         res
           .status(400)
           .send({

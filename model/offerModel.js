@@ -30,7 +30,7 @@ module.exports = class offerModel {
     .from('purchase_offer')
     .innerJoin('users', 'users.id', 'purchase_offer.user_id')
     .innerJoin('offer', 'offer.offer_id', 'purchase_offer.offer_id')
-    .where("getById", req.body.purchaseOfferId)
+    .where("purchase_offer_id", req.body.purchaseOfferId)
   }
 
   assign(req){
@@ -57,7 +57,6 @@ module.exports = class offerModel {
   }
 
   updateStatus(req) {
-    console.log(req.body,'dfghjkl;kjhg');
     return knex.select('*')
     .from('purchase_offer')
     .innerJoin('users', 'users.id', 'purchase_offer.user_id')

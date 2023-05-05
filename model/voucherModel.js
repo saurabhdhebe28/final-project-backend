@@ -25,7 +25,6 @@ module.exports = class voucherModel {
     }
 
     getById(req) {
-        console.log('inside model',req.body);
         return knex.select('*')
             .from('purchase_voucher')
             .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
