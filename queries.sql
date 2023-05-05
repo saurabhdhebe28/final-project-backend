@@ -30,6 +30,7 @@ updatedAt datetime default current_timestamp on update current_timestamp
 );
 insert into offer (offerTitle,offerImage,offerCode,merchants,brands,offerType,minAmount,amtLimit,offerExpiryDate,termsAndCondition)values('diwaliOffer','img','dil200','flipkart','Nike','pin','100','1000',20/05/2022,'Only for new Users');
 
+insert into offer (offerTitle,offerImage,offerCode,merchants,brands,offerType,minAmount,amtLimit,offerExpiryDate,termsAndCondition)values('holiOffer','img','holi10','flipkart','Nike','pin','100','1000',21/05/2022,'Only for new Users');
 
 create table purchase_offer(
 purchase_offer_id int primary key auto_increment not null,
@@ -42,6 +43,7 @@ foreign key (user_id) references users(id),
 foreign key (offer_id) references offer(offer_id)
 );
 insert into purchase_offer(user_id,offer_id,status) values(1,1,'Available');
+insert into purchase_offer(user_id,offer_id,status) values(2,1,'Unavailable');
 
 
 
@@ -61,7 +63,10 @@ termsAndConditions text,
 createdAt datetime default current_timestamp,
 updatedAt datetime default current_timestamp on update current_timestamp
 );
-insert into offer (offerTitle,offerImage,offerCode,merchants,brands,offerType,minAmount,amtLimit,offerExpiryDate,termsAndCondition)values('diwaliOffer','img','dil200','flipkart','Nike','pin','100','1000',20/05/2022,'Only for new Users');
+insert into voucher (voucherTitle,voucherImage,pointRate,merchants,brands,voucherCode,denominationStep,denominationStart,denominationEnd,voucherExpiryDate,termsAndCondition)values('Off10','img','100','flipkart','Nike','10','100','1000','2000',20/05/2022,'Only for new Users')
+
+insert into voucher (voucherTitle,voucherImage,pointRate,merchants,brands,voucherCode,denominationStep,denominationStart,denominationEnd,voucherExpiryDate,termsAndCondition)values('SALE60','img','100','amazon','Nike','10','100','1000','2000',21/05/2022,'Only for new Users')
+
 
 
 create table purchase_voucher(
@@ -75,4 +80,6 @@ foreign key (user_id) references users(id),
 foreign key (voucher_id) references voucher(voucher_id)
 );
 insert into purchase_voucher(user_id,voucher_id,status) values(1,1,'Available');
+insert into purchase_offer(user_id,offer_id,status) values(2,1,'Unavailable');
+
 
