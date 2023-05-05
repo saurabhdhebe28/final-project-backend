@@ -1,6 +1,6 @@
 const knex = require("../connection/knex");
 
-module.exports = class voucherModel {
+module.exports = class offerModel {
   constructor() {}
 
   add(result) {
@@ -25,21 +25,55 @@ module.exports = class voucherModel {
     return knex('offer').select('*');
   }
 
+  
+
   getByCode(req) {
-    return knex.select('*').from('offer')
-    .where("offerCode", req.body.offerCode)
+    return  knex.select('*')
+    .from('purchase_offer')
+    .innerJoin('users', 'users.id', 'purchase_offer.user_id')
+    .innerJoin('offer', 'offer.offer_id', 'purchase_offer.offer_id')
+    .where("offer.offerCode", req.body.offerCode)
+  }
+
+  assign(req){
+    return knex('purchase_offer').insert({
+      user_id:req.body.userId,
+      offer_id:req.body.offerId,
+      status:'Available'
+    })
+  }
+
+  checkUser(req){
+    return knex('users').select('*').where({id:req.body.userId})
+  }
+
+  checkOffer(req){
+    return knex('offer').select('*').where({offer_id:req.body.offerId})
+  }
+
+  getAssigned(){
+    return knex.select('*')
+    .from('purchase_offer')
+    .innerJoin('users', 'users.id', 'purchase_offer.user_id')
+    .innerJoin('offer', 'offer.offer_id', 'purchase_offer.offer_id')
   }
 
   updateStatus(req) {
     console.log(req.body,'dfghjkl;kjhg');
-    return knex('offer')
-      .where("offerCode", req.body.offerCode)
+    return knex.select('*')
+    .from('purchase_offer')
+    .innerJoin('users', 'users.id', 'purchase_offer.user_id')
+    .innerJoin('offer', 'offer.offer_id', 'purchase_offer.offer_id')
+      .where("purchase_offer_id", req.body.purchaseOfferId)
       .update({
-        status: "unavailable",
+        status: "Unavailable",
       })
   }
   redeemList() {
-    return knex.select('*').from('offer')
-      .where("status", "unavailable")
+    return knex.select('*')
+    .from('purchase_offer')
+    .innerJoin('users', 'users.id', 'purchase_offer.user_id')
+    .innerJoin('offer', 'offer.offer_id', 'purchase_offer.offer_id')
+      .where("status", "Unavailable")
   }
 };

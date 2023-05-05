@@ -26,7 +26,7 @@ module.exports = class offerController {
         });
       }
     } catch (error) {
-      offerResponse.error400(res, error);
+      return offerResponse.error400(res, error);
     }
   }
 
@@ -42,7 +42,36 @@ module.exports = class offerController {
         });
       }
     } catch (error) {
-      offerResponse.error400(res, error);
+      return offerResponse.error400(res, error);
+    }
+  }
+
+  async assign(req, res) {
+    try {
+      console.log('in');
+      const userInfo = await offerModel.checkUser(req);
+      const offerInfo = await offerModel.checkOffer(req);
+      if (userInfo && offerInfo) {
+        await offerModel.assign(req);
+        return res.status(200).json({ status: true, message: 'data added succesfully in Assigned table' })
+      } else {
+        return res.status(404).json({ status: true, message: 'invalid id for user or offer' })
+      }
+    } catch (error) {
+      return offerResponse.error400(res, error)
+    }
+  }
+
+  async getAssign(req, res) {
+    try {
+      const data = await offerModel.getAssigned()
+      if (data) {
+        res.status(200).json({ status: true, data, message: 'fetched assigned succesfully' });
+      } else {
+        res.status(404).json({ status: 'false', message: 'data set is empty' })
+      }
+    } catch (error) {
+      return offerResponse.error400(res, error)
     }
   }
 
@@ -53,7 +82,7 @@ module.exports = class offerController {
       if (result) {
         if (result[0].status == 'Available') {
           await offerModel.updateStatus(req);
-          const data = await offerModel.getAll()
+          const data = await offerModel.getAssigned()
           res.send({ status: 'true', data, message: 'redeemed succesfully' })
         } else if (result[0].status == 'Unavailable') {
           res.send({ status: 'true', data, message: 'already redeemed' })
@@ -62,17 +91,21 @@ module.exports = class offerController {
         res.send({ status: 'true', message: 'Offer Code Not Found' })
       }
     } catch (error) {
-      offerResponse.error400(res, error);
+      return offerResponse.error400(res, error);
     }
   }
+
 
   async redeemList(req, res) {
     try {
       const result = await offerModel.redeemList();
-      res.send({ status: 'true', data: result, message: 'redeemed datalist' })
+      if (result) {
+        res.send({ status: 'true', data: result, message: 'redeemed datalist' })
+      } else {
+        res.status(404).json({ status: 'false', message: 'data set is empty' })
+      }
     } catch (error) {
-      offerResponse.error400(res, error)
+      return offerResponse.error400(res, error)
     }
-
   }
 };
