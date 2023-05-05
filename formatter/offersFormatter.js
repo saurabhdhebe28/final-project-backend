@@ -11,7 +11,6 @@ module.exports =class offerFormatter{
             limit: req.body.limit||req.body.Limit ,
             offerExpiry: req.body.offerExpiry||req.body.expiry ,
             termsAndConditions: req.body.termsAndConditions||req.body.terms ||req.body.conditions ,
-            status: req.body.status || req.body.Status
         };
       }
 }

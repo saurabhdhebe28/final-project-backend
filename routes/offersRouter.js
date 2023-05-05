@@ -1,11 +1,13 @@
 const express = require('express')
 const offerRoute = express.Router()
-const offerController = new (require('../controller/offersController')) ()
+const offerController = new (require('../controller/offersController'))()
 
-offerRoute.post('/create-offer',offerController.addOffer);
-offerRoute.get('/get-offers',offerController.getOffers);
-offerRoute.post('/purchase-offers',offerController.purchase);
-offerRoute.post('/redeem-offer',offerController.redeemList);
-offerRoute.post('/purchase',offerController.purcahseList)
+offerRoute.post('/create-offer', offerController.addOffer);
+offerRoute.get('/get-offers', offerController.getOffers);
+offerRoute.post('/assign-offer',offerController.assign);
+offerRoute.get('/get-assign-offer',offerController.getAssign);
+offerRoute.post('/redeem-offer', offerController.redeemOffer);
+offerRoute.get('/redeem-list', offerController.redeemList);
+
 
 module.exports = offerRoute

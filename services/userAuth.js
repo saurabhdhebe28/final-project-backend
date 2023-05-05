@@ -1,4 +1,4 @@
-let userModel = new (require('../model/userModel'))
+let userAuthModel = new (require('../model/auth'))
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
@@ -6,7 +6,7 @@ require('dotenv').config()
 module.exports = class userAuthService {
     constructor() { }
     async signUp(param) {
-        let checkEmail = await userModel.getUserByEmail(param.emailId).catch((err) => {
+        let checkEmail = await userAuthModel.getUserByEmail(param.emailId).catch((err) => {
             return { error: err }
         })
 

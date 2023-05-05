@@ -1,4 +1,4 @@
-module.exports = class userValidations {
+module.exports = class authRules {
     constructor() { }
     signUp() {
         let returnData = {
@@ -19,3 +19,9 @@ module.exports = class userValidations {
         return returnData
     }
 }
+
+
+
+
+
+

@@ -1,10 +1,13 @@
 const express = require('express')
 const router = express.Router()
-const voucherController = new (require('../controller/vouchersController')) ()
+const voucherController = new (require('../controller/vouchersController'))()
 
-router.post('/create-voucher',voucherController.addVoucher); //done
-router.get('/get-voucher',voucherController.getVoucher); //done
-router.post('/redeem-voucher',voucherController.redeemVoucher); //done
-router.post('/purchase-voucher-list',voucherController.purcahseList);
+router.post('/create-voucher', voucherController.addVoucher);
+router.get('/get-voucher', voucherController.getVouchers);
+router.get('/purchase-voucher', voucherController.purchaseVoucher);
+router.post('/redeem-voucher', voucherController.redeemVoucher);
+router.get('/redeem-list', voucherController.redeemList);
 
-module.exports = router;
+
+
+module.exports = router
