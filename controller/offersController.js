@@ -21,7 +21,7 @@ module.exports = class offerController {
         console.log("it fails");
         res.send({
           status: "false",
-          message: "product not added",
+          message: "offer not added",
           error: validation.errors.errors,
         });
       }
@@ -34,9 +34,9 @@ module.exports = class offerController {
     try {
       const result = await offerModel.getAll();
       if (result) {
-        offerResponse.success(res, result);
+       return offerResponse.success(res, result);
       } else {
-        res.send({
+       return res.send({
           status: "false",
           message: "No Data in Offers Table",
         });
@@ -66,9 +66,9 @@ module.exports = class offerController {
     try {
       const data = await offerModel.getAssigned()
       if (data) {
-        res.status(200).json({ status: true, data, message: 'fetched assigned succesfully' });
+       return res.status(200).json({ status: true, data, message: 'fetched assigned succesfully' });
       } else {
-        res.status(404).json({ status: 'false', message: 'data set is empty' })
+       return res.status(404).json({ status: 'false', message: 'data set is empty' })
       }
     } catch (error) {
       return offerResponse.error400(res, error)
@@ -77,8 +77,7 @@ module.exports = class offerController {
 
   async redeemOffer(req, res) {
     try {
-      const result = await offerModel.getByCode(req);
-      console.log('in redem', result);
+      const result = await offerModel.getById(req);
       if (result) {
         if (result[0].status == 'Available') {
           await offerModel.updateStatus(req);

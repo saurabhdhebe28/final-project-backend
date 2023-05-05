@@ -4,8 +4,6 @@ module.exports = class offerModel {
   constructor() {}
 
   add(result) {
-    //after login change it to add(result,userData){
-    console.log("in offer model");
     return knex("offer")
       .insert({
         offerTitle: result.offerTitle,
@@ -27,12 +25,12 @@ module.exports = class offerModel {
 
   
 
-  getByCode(req) {
+  getById(req) {
     return  knex.select('*')
     .from('purchase_offer')
     .innerJoin('users', 'users.id', 'purchase_offer.user_id')
     .innerJoin('offer', 'offer.offer_id', 'purchase_offer.offer_id')
-    .where("offer.offerCode", req.body.offerCode)
+    .where("getById", req.body.purchaseOfferId)
   }
 
   assign(req){

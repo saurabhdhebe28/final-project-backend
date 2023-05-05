@@ -4,9 +4,7 @@ const knex = require('../connection/knex')
 module.exports = class voucherModel {
     constructor() { }
 
-    add(result) {               //after login change it to add(result,userData){
-        console.log('in offer model')
-        console.log('in voucher model')
+    add(result) {
         return knex("voucher").insert({
             voucherTitle: result.voucherTitle,
             voucherImage: result.voucherImage,
@@ -23,16 +21,37 @@ module.exports = class voucherModel {
     }
 
     getAll() {
-        return knex.select('*').from('voucher')
+        return knex('voucher').select('*');
     }
 
-    getByCode(req) {
-        return knex.select('*').from('voucher').where('voucherCode', req.body.offerCode)
+    getById(req) {
+        console.log('inside model',req.body);
+        return knex.select('*')
+            .from('purchase_voucher')
+            .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
+            .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id')
+            .where("purchase_voucher_id", req.body.purchaseVoucherId)
     }
 
-    updateStatus() {
-        return knex.select('*').from('offer').where('voucherCode', req.body.voucherCode).update({
-            status: 'unavailable',
-        })
+    updateStatus(req) {
+        return knex.select('*')
+            .from('purchase_voucher')
+            .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
+            .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id')
+            .where("purchase_voucher_id", req.body.purchaseVoucherId).update({
+                status: 'Unavailable',
+            })
+    }
+    getPurchasedVoucher(){
+        return knex.select('*')
+        .from('purchase_voucher')
+        .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
+        .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id')
+    }
+    getRedeemList(){
+        return knex.select('*')
+        .from('purchase_voucher')
+        .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
+        .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id').where("status", "Unavailable")
     }
 }
