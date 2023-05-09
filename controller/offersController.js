@@ -13,12 +13,10 @@ module.exports = class offerController {
       const rules = await offerValidation.addOffer();
       let validation = new validator(result, rules);
       if (validation.passes()) {
-        console.log("it pass");
         await offerModel.add(result);
         await offerService.addImg(req, res, result);
         return offerResponse.offerAdded(res, result);
       } else {
-        console.log("it fails");
         res.send({
           status: "false",
           message: "offer not added",
@@ -48,7 +46,6 @@ module.exports = class offerController {
 
   async assign(req, res) {
     try {
-      console.log('in');
       const userInfo = await offerModel.checkUser(req);
       const offerInfo = await offerModel.checkOffer(req);
       if (userInfo && offerInfo) {

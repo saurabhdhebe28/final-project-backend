@@ -6,7 +6,7 @@ module.exports = class orcModel {
         return knex('orcData').insert(data)
     }
     orcDataList() {
-        return knex.select('requestedBy', 'signedBy', 'totalCounter', 'sdcTime', 'tin', 'locationName', 'address', 'totalAmount', 'city', 'transactionTypeCounter').from('orcData')
+        return knex.select('requestedBy', 'signedBy', 'totalCounter', 'sdcTime', 'tin', 'locationName', 'address', 'totalAmount', 'city', 'transactionTypeCounter').from('orcData').orderBy('createdAt', 'desc');
     }
     OcrListBysearch(requestedBy, tin) {
 
@@ -15,7 +15,7 @@ module.exports = class orcModel {
                 'requestedBy': requestedBy
             }).andWhere({
                 'tin': tin
-            })
+            }).orderBy('createdAt', 'desc');
         }
         if (requestedBy || tin) {
 
@@ -23,7 +23,7 @@ module.exports = class orcModel {
                 'requestedBy': requestedBy
             }).orWhere({
                 'tin': tin
-            })
+            }).orderBy('createdAt', 'desc');
         }
     }
 

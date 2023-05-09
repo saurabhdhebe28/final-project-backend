@@ -1,7 +1,7 @@
 module.exports = class voucherResponse {
   constructor() { }
   success(res, data) {
-    return res.status(200).send({ status: true, Data: data });
+    return res.status(200).send({ status: true, data: data });
   }
   emptyFile(res) {
     return res.status(400).send({ status: false, message: "No Image Uploaded" });
