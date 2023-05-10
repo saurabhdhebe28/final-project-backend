@@ -25,6 +25,7 @@ module.exports = class voucherModel {
     }
 
     getById(req) {
+        console.log('inside model',req.body);
         return knex.select('*')
             .from('purchase_voucher')
             .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
@@ -33,13 +34,18 @@ module.exports = class voucherModel {
     }
 
     updateStatus(req) {
-        return knex.select('*')
+        try {
+            return knex.select('*')
             .from('purchase_voucher')
             .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
             .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id')
             .where("purchase_voucher_id", req.body.purchaseVoucherId).update({
                 status: 'Unavailable',
             })
+        } catch (error) {
+            console.log('error');
+        }
+        // Undefined binding(s) detected when compiling SELECT. Undefined column(s): [purchase_voucher_id] query: select * from `purchase_voucher` inner join `users` on `users`.`id` = `purchase_voucher`.`user_id` inner join `voucher` on `voucher`.`voucher_id` = `purchase_voucher`.`voucher_id` where `purchase_voucher_id` = ?
     }
     getPurchasedVoucher(){
         return knex.select('*')

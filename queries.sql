@@ -1,4 +1,22 @@
 use finalProject;
+
+CREATE TABLE orcData (
+  id int NOT NULL AUTO_INCREMENT,
+  requestedBy varchar(30) NOT NULL,
+  totalCounter varchar(255) NOT NULL,
+  sdcTime datetime NOT NULL,
+  tin varchar(255) NOT NULL,
+  locationName varchar(255) NOT NULL,
+  totalAmount varchar(255) NOT NULL,
+  address varchar(255) NOT NULL,
+  city varchar(100) NOT NULL,
+  transactionTypeCounter varchar(100) NOT NULL,
+  createdAt datetime DEFAULT CURRENT_TIMESTAMP,
+  updatedAt datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  signedBy varchar(100) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 create table users(
 id int not null primary key auto_increment,
 firstName varchar(30) not null,

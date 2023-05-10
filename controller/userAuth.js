@@ -13,7 +13,6 @@ module.exports = class userAuthController {
             return response.send(validator.errors)
         }
         let add = await userAuthService.signUp(data).catch((err) => {
-
             return { error: err }
         })
         if (!add || add.error) {
