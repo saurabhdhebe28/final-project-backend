@@ -1,6 +1,6 @@
 const express = require("express");
 const fileUpload = require("express-fileupload");
-let  {CheckToken} = require('./middlewares/userAuth')
+let { CheckToken } = require('./middlewares/userAuth')
 const cors = require('cors')
 require('dotenv').config()
 
@@ -14,7 +14,7 @@ app.use(cors())
 app.use(fileUpload());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
+// console.log(__dirname)
 app.use('/auth', authRouter)
 app.use(CheckToken)
 app.use("/offers", offerRoute);

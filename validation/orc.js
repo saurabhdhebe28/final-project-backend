@@ -8,6 +8,14 @@ module.exports = class orcRules {
         return returnData
     }
 
+    orcFile() {
+        let returData = {
+            'file': 'required',
+            'htmlTemplate': 'required|string'
+        }
+        return returData
+    }
+
     orcDataObject() {
         let returnData = {
             'requestedBy': 'required',
@@ -19,7 +27,8 @@ module.exports = class orcRules {
             'totalAmount': 'required',
             'address': 'required',
             'city': 'required',
-            'transactionTypeCounter': 'required'
+            'transactionTypeCounter': 'required',
+            'location': 'required'
         }
         return returnData
     }
