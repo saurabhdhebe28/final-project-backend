@@ -13,8 +13,8 @@ module.exports = class offerController {
       const rules = await offerValidation.addOffer();
       let validation = new validator(result, rules);
       if (validation.passes()) {
-        await offerModel.add(result);
-        await offerService.addImg(req, res, result);
+        offerModel.add(result);  
+        offerService.addImg(req, res, result);
         return offerResponse.offerAdded(res, result);
       } else {
         res.send({

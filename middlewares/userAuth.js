@@ -17,6 +17,4 @@ async function CheckToken(request, response, next) {
     }
 }
 
-
-
 module.exports = { CheckToken }

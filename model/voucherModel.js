@@ -25,7 +25,6 @@ module.exports = class voucherModel {
     }
 
     getById(req) {
-        console.log('inside model', req.body);
         return knex.select('*')
             .from('purchase_voucher')
             .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
@@ -71,8 +70,8 @@ module.exports = class voucherModel {
     }
     getRedeemList() {
         return knex.select('*')
-            .from('purchase_voucher')
-            .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
-            .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id').where("status", "Unavailable").orderBy('purchase_voucher_id', 'desc')
+        .from('purchase_voucher')
+        .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
+        .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id').where("status", "Unavailable").orderBy('purchase_voucher_id','desc')
     }
 }
