@@ -27,7 +27,7 @@ password varchar(200) not null,
 craetedAt datetime default current_timestamp,
 updatedAT datetime default current_timestamp on update current_timestamp
 );
-insert into users (firstName,lastName,emailID,mobileNumber,password)values('mohif','waghu','mohif@gmail.com','8097569616','mohif9232')
+insert into users (firstName,lastName,emailID,mobileNumber,password)values('Keval','Vadher','keval67@gmail.com','9890987656','Kewl12!');
 
 
 
@@ -46,7 +46,7 @@ termsAndConditions text,
 createdAt datetime default current_timestamp,
 updatedAt datetime default current_timestamp on update current_timestamp
 );
-insert into offer (offerTitle,offerImage,offerCode,merchants,brands,offerType,minAmount,amtLimit,offerExpiryDate,termsAndCondition)values('diwaliOffer','img','dil200','flipkart','Nike','pin','100','1000',20/05/2022,'Only for new Users');
+insert into offer (offerTitle,offerImage,offerCode,merchants,brands,offerType,minAmount,amtLimit,offerExpiryDate,termsAndConditions)values('Diwali','img','dil200','flipkart','Nike','pin','100','1000',20-05-2022,'Only for new Users');
 
 insert into offer (offerTitle,offerImage,offerCode,merchants,brands,offerType,minAmount,amtLimit,offerExpiryDate,termsAndCondition)values('holiOffer','img','holi10','flipkart','Nike','pin','100','1000',21/05/2022,'Only for new Users');
 

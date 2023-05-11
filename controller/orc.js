@@ -16,6 +16,7 @@ module.exports = class Orc {
         let add = await orcService.addUrl(request.body.url).catch((err) => {
             return { error: err }
         })
+        console.log(add);
         if (!add || add.error) {
             return response.send(add.data)
         }

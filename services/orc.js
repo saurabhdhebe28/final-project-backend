@@ -14,10 +14,10 @@ module.exports = class Orc {
         let value
         try {
             htmlSyntax = await fetch(url)
-
             value = await htmlSyntax.text()
 
         } catch (error) {
+            console.log(error,'error')
             return {
                 data: {
                     status: false,
