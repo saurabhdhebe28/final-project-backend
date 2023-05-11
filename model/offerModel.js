@@ -1,11 +1,9 @@
 const knex = require("../connection/knex");
 
-module.exports = class voucherModel {
+module.exports = class offerModel {
   constructor() {}
 
   add(result) {
-    //after login change it to add(result,userData){
-    console.log("in offer model");
     return knex("offer")
       .insert({
         offerTitle: result.offerTitle,
@@ -17,30 +15,62 @@ module.exports = class voucherModel {
         offerType: result.offerType,
         amtLimit: result.limit,
         offerExpiryDate: result.offerExpiry,
-        termsAndConditions: result.termsAndConditions,
-        status: "available",
+        termsAndConditions: result.termsAndConditions
       })
   }
 
  async getAll() {
-    return knex('offer').select('*');
+    return knex('offer').select('*').orderBy('createdAt','desc')
   }
 
-  getByCode(req) {
-    return knex.select('*').from('offer')
-    .where("offerCode", req.body.offerCode)
+  
+
+  getById(req) {
+    return  knex.select('*')
+    .from('purchase_offer')
+    .innerJoin('users', 'users.id', 'purchase_offer.user_id')
+    .innerJoin('offer', 'offer.offer_id', 'purchase_offer.offer_id')
+    .where("purchase_offer_id", req.body.purchaseOfferId)
+  }
+
+  assign(req){
+    return knex('purchase_offer').insert({
+      user_id:req.body.userId,
+      offer_id:req.body.offerId,
+      status:'Available'
+    })
+  }
+
+  checkUser(req){
+    return knex('users').select('*').where({id:req.body.userId})
+  }
+
+  checkOffer(req){
+    return knex('offer').select('*').where({offer_id:req.body.offerId})
+  }
+
+  getAssigned(){
+    return knex.select('*')
+    .from('purchase_offer')
+    .innerJoin('users', 'users.id', 'purchase_offer.user_id')
+    .innerJoin('offer', 'offer.offer_id', 'purchase_offer.offer_id').orderBy('purchase_offer_id','desc')
   }
 
   updateStatus(req) {
-    console.log(req.body,'dfghjkl;kjhg');
-    return knex('offer')
-      .where("offerCode", req.body.offerCode)
+    return knex.select('*')
+    .from('purchase_offer')
+    .innerJoin('users', 'users.id', 'purchase_offer.user_id')
+    .innerJoin('offer', 'offer.offer_id', 'purchase_offer.offer_id')
+      .where("purchase_offer_id", req.body.purchaseOfferId)
       .update({
-        status: "unavailable",
+        status: "Unavailable",
       })
   }
   redeemList() {
-    return knex.select('*').from('offer')
-      .where("status", "unavailable")
+    return knex.select('*')
+    .from('purchase_offer')
+    .innerJoin('users', 'users.id', 'purchase_offer.user_id')
+    .innerJoin('offer', 'offer.offer_id', 'purchase_offer.offer_id')
+      .where("status", "Unavailable").orderBy('purchase_offer_id','desc')
   }
 };

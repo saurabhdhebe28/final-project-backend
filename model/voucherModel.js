@@ -4,9 +4,7 @@ const knex = require('../connection/knex')
 module.exports = class voucherModel {
     constructor() { }
 
-    add(result) {               //after login change it to add(result,userData){
-        console.log('in offer model')
-        console.log('in voucher model')
+    add(result) {
         return knex("voucher").insert({
             voucherTitle: result.voucherTitle,
             voucherImage: result.voucherImage,
@@ -18,25 +16,62 @@ module.exports = class voucherModel {
             denominationEnd: result.denominationEnd,
             voucherExpiryDate: result.voucherExpiryDate,
             voucherCode: result.voucherCode,
-            termsAndConditions: result.termsAndConditions,
-            status: 'available'
-            //after login
-            //firstName:userData.firstName,
-            //firstName:userData.lastName
-        }).then(() => console.log('data added'))
+            termsAndConditions: result.termsAndConditions
+        })
     }
 
     getAll() {
-        return knex.select('*').from('voucher').then(() => console.log('fetched all data succesfully'))
+        return knex('voucher').select('*').orderBy('voucher_id', 'desc');
     }
 
-    getByCode(req) {
-        return knex.select('*').from('voucher').where('voucherCode', req.body.offerCode).then(() => console.log('fetched all data succesfully by offerCode'))
+    getById(req) {
+        console.log('inside model', req.body);
+        return knex.select('*')
+            .from('purchase_voucher')
+            .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
+            .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id')
+            .where("purchase_voucher_id", req.body.purchaseVoucherId)
     }
 
-    updateStatus() {
-        return knex.select('*').from('offer').where('voucherCode', req.body.voucherCode).update({
-            status: 'unavailable',
-        }).then(() => console.log('status updated to unavailable'))
+    assignVoucher(req) {
+        return knex('purchase_voucher').insert({
+            user_id: req.body.userId,
+            voucher_id: req.body.voucherId,
+            status: 'Available'
+        })
+    }
+
+    checkUser(req) {
+        return knex('users').select('*').where({ id: req.body.userId })
+    }
+
+    checkVoucher(req) {
+        return knex('voucher').select('*').where({ voucher_id: req.body.voucherId })
+    }
+
+    updateStatus(req) {
+        try {
+            return knex.select('*')
+                .from('purchase_voucher')
+                .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
+                .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id')
+                .where("purchase_voucher_id", req.body.purchaseVoucherId).update({
+                    status: 'Unavailable',
+                })
+        } catch (error) {
+            console.log('error');
+        }
+    }
+    getPurchasedVoucher() {
+        return knex.select('*')
+            .from('purchase_voucher')
+            .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
+            .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id').orderBy('purchase_voucher_id', 'desc')
+    }
+    getRedeemList() {
+        return knex.select('*')
+            .from('purchase_voucher')
+            .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
+            .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id').where("status", "Unavailable").orderBy('purchase_voucher_id', 'desc')
     }
 }
