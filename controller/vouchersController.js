@@ -77,7 +77,6 @@ module.exports = class voucherController {
   async redeemVoucher(req,res){
     try {
       const result = await voucherModel.getById(req);
-      console.log(result);
       if(result){
         if(result[0].status=='Available'){
           await voucherModel.updateStatus(req);
