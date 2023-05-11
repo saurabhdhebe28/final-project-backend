@@ -21,7 +21,7 @@ module.exports = class voucherModel {
     }
 
     getAll() {
-        return knex('voucher').select('*');
+        return knex('voucher').select('*').orderBy('voucher_id','desc');
     }
 
     getById(req) {
@@ -33,6 +33,22 @@ module.exports = class voucherModel {
             .where("purchase_voucher_id", req.body.purchaseVoucherId)
     }
 
+    assignVoucher(req){
+        return knex('purchase_voucher').insert({
+          user_id:req.body.userId,
+          voucher_id:req.body.voucherId,
+          status:'Available'
+        })
+      }
+    
+      checkUser(req){
+        return knex('users').select('*').where({id:req.body.userId})
+      }
+    
+      checkVoucher(req){
+        return knex('voucher').select('*').where({voucher_id:req.body.voucherId})
+      }
+    
     updateStatus(req) {
         try {
             return knex.select('*')
@@ -51,12 +67,12 @@ module.exports = class voucherModel {
         return knex.select('*')
         .from('purchase_voucher')
         .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
-        .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id')
+        .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id').orderBy('purchase_voucher_id','desc')
     }
     getRedeemList(){
         return knex.select('*')
         .from('purchase_voucher')
         .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
-        .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id').where("status", "Unavailable")
+        .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id').where("status", "Unavailable").orderBy('purchase_voucher_id','desc')
     }
 }

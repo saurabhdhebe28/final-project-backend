@@ -20,7 +20,7 @@ module.exports = class offerModel {
   }
 
  async getAll() {
-    return knex('offer').select('*');
+    return knex('offer').select('*').orderBy('createdAt','desc')
   }
 
   
@@ -53,7 +53,7 @@ module.exports = class offerModel {
     return knex.select('*')
     .from('purchase_offer')
     .innerJoin('users', 'users.id', 'purchase_offer.user_id')
-    .innerJoin('offer', 'offer.offer_id', 'purchase_offer.offer_id')
+    .innerJoin('offer', 'offer.offer_id', 'purchase_offer.offer_id').orderBy('purchase_offer_id','desc')
   }
 
   updateStatus(req) {
@@ -71,6 +71,6 @@ module.exports = class offerModel {
     .from('purchase_offer')
     .innerJoin('users', 'users.id', 'purchase_offer.user_id')
     .innerJoin('offer', 'offer.offer_id', 'purchase_offer.offer_id')
-      .where("status", "Unavailable")
+      .where("status", "Unavailable").orderBy('purchase_offer_id','desc')
   }
 };
