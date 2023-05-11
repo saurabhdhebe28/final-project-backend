@@ -5,6 +5,7 @@ const validatorjs = require('validatorjs')
 let orcModel = new (require('../model/orc'))
 let moment = require('moment')
 let { createShortUrl } = require('../helper/shortUrl')
+const config = require('../config')
 
 // const orcRules = require('../validator/orc')
 
@@ -46,9 +47,11 @@ module.exports = class Orc {
         let fileInfo = param.file
         let fileName = fileInfo.name
         let htmlContent = param.htmlTemplate
-        let folderPath = '/home/mohif/mohif/finalproject/final-project-backend'
-        let uploadPath = folderPath + '/public' + '/ocrUploads/' + fileName
-        let dbPath = uploadPath.slice(52)
+        let uploadPath = config.ocrUploadPath + fileName
+        let a =uploadPath.split('/')
+        let b = a.reverse()
+        let dbPath = '/'+b[2]+'/'+b[1]+'/'+b[0]
+       
         let $ = cheerio.load(htmlContent)
         let urlData = {
             requestedBy: $('#requestedByLabel').text().trim(),
@@ -178,7 +181,7 @@ module.exports = class Orc {
     }
 
     async orcList() {
-        let folderPath = '/home/mohif/mohif/finalproject/final-project-backend'
+        let folderPath = config.ocrUploadPath
         let data
         try {
             data = await orcModel.orcDataList()
