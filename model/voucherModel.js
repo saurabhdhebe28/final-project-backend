@@ -21,10 +21,11 @@ module.exports = class voucherModel {
     }
 
     getAll() {
-        return knex('voucher').select('*');
+        return knex('voucher').select('*').orderBy('voucher_id', 'desc');
     }
 
     getById(req) {
+        console.log('inside model', req.body);
         return knex.select('*')
             .from('purchase_voucher')
             .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
@@ -32,25 +33,46 @@ module.exports = class voucherModel {
             .where("purchase_voucher_id", req.body.purchaseVoucherId)
     }
 
+    assignVoucher(req) {
+        return knex('purchase_voucher').insert({
+            user_id: req.body.userId,
+            voucher_id: req.body.voucherId,
+            status: 'Available'
+        })
+    }
+
+    checkUser(req) {
+        return knex('users').select('*').where({ id: req.body.userId })
+    }
+
+    checkVoucher(req) {
+        return knex('voucher').select('*').where({ voucher_id: req.body.voucherId })
+    }
+
     updateStatus(req) {
+        try {
+            return knex.select('*')
+                .from('purchase_voucher')
+                .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
+                .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id')
+                .where("purchase_voucher_id", req.body.purchaseVoucherId).update({
+                    status: 'Unavailable',
+                })
+        } catch (error) {
+            console.log('error');
+        }
+        // Undefined binding(s) detected when compiling SELECT. Undefined column(s): [purchase_voucher_id] query: select * from `purchase_voucher` inner join `users` on `users`.`id` = `purchase_voucher`.`user_id` inner join `voucher` on `voucher`.`voucher_id` = `purchase_voucher`.`voucher_id` where `purchase_voucher_id` = ?
+    }
+    getPurchasedVoucher() {
         return knex.select('*')
             .from('purchase_voucher')
             .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
-            .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id')
-            .where("purchase_voucher_id", req.body.purchaseVoucherId).update({
-                status: 'Unavailable',
-            })
+            .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id').orderBy('purchase_voucher_id', 'desc')
     }
-    getPurchasedVoucher(){
+    getRedeemList() {
         return knex.select('*')
-        .from('purchase_voucher')
-        .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
-        .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id')
-    }
-    getRedeemList(){
-        return knex.select('*')
-        .from('purchase_voucher')
-        .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
-        .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id').where("status", "Unavailable")
+            .from('purchase_voucher')
+            .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
+            .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id').where("status", "Unavailable").orderBy('purchase_voucher_id', 'desc')
     }
 }

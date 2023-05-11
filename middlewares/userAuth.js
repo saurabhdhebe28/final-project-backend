@@ -15,7 +15,6 @@ async function CheckToken(request, response, next) {
     } catch (error) {
         return response.send({ status: false, data: 'Token Not valid' })
     }
-    next()
 }
 
 

@@ -91,13 +91,13 @@ module.exports = class Orc {
         if (!filePath) {
             return response.send({ status: false, data: "File Path Not Found" })
         }
-        
-            response.download(filePath,(err)=>{
-                if(err){
-                    return response.send({status:false,data:'Something went wrong'})
-                }
-            })
-        
+
+        response.download(filePath, (err) => {
+            if (err) {
+                return response.send({ status: false, data: 'Something went wrong' })
+            }
+        })
+
     }
 }
 

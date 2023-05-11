@@ -46,13 +46,27 @@ module.exports = class voucherController {
     }
   }
 
-  async purchaseVoucher(req, res) {
+  async assignVoucher(req, res) {
+    try {
+      const userInfo = await voucherModel.checkUser(req);
+      const voucherInfo = await voucherModel.checkVoucher(req);
+      if (userInfo && voucherInfo) {
+        await voucherModel.assignVoucher(req);
+        return res.status(200).json({ status: true, message: 'Data added succesfully in Assigned table' })
+      } else {
+        return res.status(404).json({ status: true, message: 'Invalid id for user or offer' })
+      }
+    } catch (error) {
+      return voucherResponse.error400(res, error)
+    }
+  }
+  async purchasedVoucher(req, res) {
     try {
       const data = await voucherModel.getPurchasedVoucher()
       if (data) {
-        return res.status(200).json({ status: true, data, message: 'fetched assigned succesfully' });
+        return res.status(200).json({ status: true, data, message: 'Fetched assigned voucher succesfully' });
       } else {
-        return res.status(404).json({ status: 'false', message: 'data set is empty' })
+        return res.status(404).json({ status: 'false', message: 'Data set is empty' })
       }
     } catch (error) {
       return voucherResponse.error400(res, error)
@@ -63,13 +77,14 @@ module.exports = class voucherController {
   async redeemVoucher(req, res) {
     try {
       const result = await voucherModel.getById(req);
+      console.log(result);
       if (result) {
         if (result[0].status == 'Available') {
           await voucherModel.updateStatus(req);
           const data = await voucherModel.getPurchasedVoucher();
-          res.send({ status: 'true', data, message: 'redeemed succesfully' })
+          res.send({ status: 'true', data, message: 'Voucher redeemed succesfully' })
         } else if (result[0].status == 'Unavailable') {
-          res.send({ status: 'true', data, message: 'already redeemed' })
+          res.send({ status: 'true', data, message: ' Voucher already redeemed' })
         }
       } else {
         res.send({ status: 'true', message: 'Voucher Code Not Found' })
@@ -83,12 +98,12 @@ module.exports = class voucherController {
     try {
       const result = await voucherModel.getRedeemList();
       if (result) {
-        res.send({ status: 'true', data: result, message: 'redeemed datalist' })
+        res.send({ status: 'true', data: result, message: 'Voucher redeemed datalist' })
       } else {
-        res.status(404).json({ status: 'false', message: 'data set is empty' })
+        res.status(404).json({ status: 'false', message: 'Data set is empty' })
       }
     } catch (error) {
-      return voucherResponse.error400(res, error)
+      return offerResponse.error400(res, error)
     }
   }
 };

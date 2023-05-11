@@ -19,7 +19,7 @@ module.exports = class offerController {
       } else {
         res.send({
           status: "false",
-          message: "offer not added",
+          message: "Offer not added",
           error: validation.errors.errors,
         });
       }
@@ -50,9 +50,9 @@ module.exports = class offerController {
       const offerInfo = await offerModel.checkOffer(req);
       if (userInfo && offerInfo) {
         await offerModel.assign(req);
-        return res.status(200).json({ status: true, message: 'data added succesfully in Assigned table' })
+        return res.status(200).json({ status: true, message: 'Data added succesfully in Assigned table' })
       } else {
-        return res.status(404).json({ status: true, message: 'invalid id for user or offer' })
+        return res.status(404).json({ status: true, message: 'Invalid id for user or offer' })
       }
     } catch (error) {
       return offerResponse.error400(res, error)
@@ -63,9 +63,9 @@ module.exports = class offerController {
     try {
       const data = await offerModel.getAssigned()
       if (data) {
-       return res.status(200).json({ status: true, data, message: 'fetched assigned succesfully' });
+       return res.status(200).json({ status: true, data, message: 'Fetched assigned offer succesfully' });
       } else {
-       return res.status(404).json({ status: 'false', message: 'data set is empty' })
+       return res.status(404).json({ status: 'false', message: 'Data set is empty' })
       }
     } catch (error) {
       return offerResponse.error400(res, error)
@@ -79,9 +79,9 @@ module.exports = class offerController {
         if (result[0].status == 'Available') {
           await offerModel.updateStatus(req);
           const data = await offerModel.getAssigned()
-          res.send({ status: 'true', data, message: 'redeemed succesfully' })
+          res.send({ status: 'true', data, message: ' Offer redeemed succesfully' })
         } else if (result[0].status == 'Unavailable') {
-          res.send({ status: 'true', data, message: 'already redeemed' })
+          res.send({ status: 'true', data, message: 'Already redeemed' })
         }
       } else {
         res.send({ status: 'true', message: 'Offer Code Not Found' })
@@ -96,9 +96,9 @@ module.exports = class offerController {
     try {
       const result = await offerModel.redeemList();
       if (result) {
-        res.send({ status: 'true', data: result, message: 'redeemed datalist' })
+        res.send({ status: 'true', data: result, message: 'Redeemed datalist' })
       } else {
-        res.status(404).json({ status: 'false', message: 'data set is empty' })
+        res.status(404).json({ status: 'false', message: 'Data set is empty' })
       }
     } catch (error) {
       return offerResponse.error400(res, error)
