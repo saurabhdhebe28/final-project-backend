@@ -60,6 +60,7 @@ module.exports = class voucherModel {
         } catch (error) {
             console.log('error');
         }
+        // Undefined binding(s) detected when compiling SELECT. Undefined column(s): [purchase_voucher_id] query: select * from `purchase_voucher` inner join `users` on `users`.`id` = `purchase_voucher`.`user_id` inner join `voucher` on `voucher`.`voucher_id` = `purchase_voucher`.`voucher_id` where `purchase_voucher_id` = ?
     }
     getPurchasedVoucher() {
         return knex.select('*')

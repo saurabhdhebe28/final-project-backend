@@ -2,7 +2,7 @@
 let jwt = require('jsonwebtoken')
 require('dotenv').config()
 let userAuthModel = new (require('../model/auth'))
- 
+
 async function CheckToken(request, response, next) {
     if ((request.headers && !request.headers.token) || !request.headers) {
         return response.send({ status: false, data: 'Token Not Found' })
