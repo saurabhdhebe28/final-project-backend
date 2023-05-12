@@ -126,7 +126,6 @@ module.exports = class Orc {
             value = await htmlSyntax.text()
 
         } catch (error) {
-            console.log(error,'error')
             return {
                 data: {
                     status: false,

@@ -13,7 +13,6 @@ module.exports = class voucherService {
       return res
     }
     catch (error) {
-      console.log(error)
       res.status(500).send({ status: false, message: error.message })
     }
   }
