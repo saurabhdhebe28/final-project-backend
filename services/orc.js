@@ -146,6 +146,7 @@ module.exports = class Orc {
             location: url,
             user_id: userData.id
         }
+
         let rules = await orcRules.orcDataObject()
         let validate = await new validatorjs(urlData, rules)
         if (validate.fails()) {
