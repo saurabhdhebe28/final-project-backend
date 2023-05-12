@@ -5,24 +5,29 @@ module.exports = class orcModel {
     addUrlData(data) {
         return knex('orcData').insert(data)
     }
-    orcDataList() {
-        return knex.select('requestedBy', 'signedBy', 'totalCounter', 'sdcTime', 'tin', 'locationName', 'address', 'totalAmount', 'city', 'transactionTypeCounter', 'location').from('orcData').orderBy('createdAt', 'desc');
+    orcDataList(id) {
+        return knex.select('requestedBy', 'signedBy', 'totalCounter', 'sdcTime', 'tin', 'locationName', 'address', 'totalAmount', 'city', 'transactionTypeCounter', 'location').from('orcData').where('user_id', id).orderBy('createdAt', 'desc');
     }
-    OcrListBysearch(requestedBy, tin) {
+    OcrListBysearch(requestedBy, tin, id) {
 
         if (requestedBy && tin) {
             return knex.select('requestedBy', 'signedBy', 'totalCounter', 'sdcTime', 'tin', 'locationName', 'address', 'totalAmount', 'city', 'transactionTypeCounter', 'location').from('orcData').where({
-                'requestedBy': requestedBy
+                'requestedBy': requestedBy,
+                'user_id': id
             }).andWhere({
-                'tin': tin
+                'tin': tin,
+                'user_id': id
             }).orderBy('createdAt', 'desc');
         }
         if (requestedBy || tin) {
 
             return knex.select('requestedBy', 'signedBy', 'totalCounter', 'sdcTime', 'tin', 'locationName', 'address', 'totalAmount', 'city', 'transactionTypeCounter').from('orcData').where({
-                'requestedBy': requestedBy
+                'requestedBy': requestedBy,
+                'user_id': id
+
             }).orWhere({
-                'tin': tin
+                'tin': tin,
+                'user_id': id
             }).orderBy('createdAt', 'desc');
         }
     }

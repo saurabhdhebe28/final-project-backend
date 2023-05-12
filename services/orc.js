@@ -1,41 +1,36 @@
 const cheerio = require('cheerio')
 let orcRules = new (require('../validation/orc'))
 const validatorjs = require('validatorjs')
-// const { val } = require('cheerio/lib/api/attributes')
 let orcModel = new (require('../model/orc'))
 let moment = require('moment')
-let { createShortUrl } = require('../helper/shortUrl')
 const config = require('../config')
+const axios = require('axios')
 
-// const orcRules = require('../validator/orc')
 
 module.exports = class Orc {
     constructor() { }
-    async getHtmlTemplate(url) {
-        let htmlSyntax
-        let value
+    async getHeaders(param) {
+        let response
         try {
-            htmlSyntax = await fetch(url)
-
-            value = await htmlSyntax.text()
+            response = await axios.get(param.query.url)
 
         } catch (error) {
             return {
                 data: {
                     status: false,
-                    data: error.message
+                    data: error
                 }
             }
         }
         return {
             data: {
                 status: true,
-                data: value
+                data: response.headers
             }
         }
-    }
 
-    async addOcrByfile(param) {
+    }
+    async addOcrByfile(param, userData) {
         if (!param.file || !param.htmlTemplate || (typeof param.file != 'object')) {
             return {
                 data: {
@@ -48,10 +43,10 @@ module.exports = class Orc {
         let fileName = fileInfo.name
         let htmlContent = param.htmlTemplate
         let uploadPath = config.ocrUploadPath + fileName
-        let a =uploadPath.split('/')
+        let a = uploadPath.split('/')
         let b = a.reverse()
-        let dbPath = '/'+b[2]+'/'+b[1]+'/'+b[0]
-       
+        let dbPath = '/' + b[2] + '/' + b[1] + '/' + b[0]
+
         let $ = cheerio.load(htmlContent)
         let urlData = {
             requestedBy: $('#requestedByLabel').text().trim(),
@@ -66,7 +61,8 @@ module.exports = class Orc {
             address: $('#addressLabel').text().trim(),
             city: $('#cityLabel').text().trim(),
             transactionTypeCounter: $('#transactionTypeCounterLabel').text().trim(),
-            location: dbPath
+            location: dbPath,
+            user_id: userData.id
         }
 
         try {
@@ -118,15 +114,13 @@ module.exports = class Orc {
         }
 
     }
-    async addUrl(url) {
+    async addUrl(url, userData) {
         let htmlSyntax
         let value
         try {
-            htmlSyntax = await fetch(url)
-            value = await htmlSyntax.text()
-
+            htmlSyntax = await axios.get(url)
+            value = await htmlSyntax.data
         } catch (error) {
-            console.log(error,'error')
             return {
                 data: {
                     status: false,
@@ -149,7 +143,8 @@ module.exports = class Orc {
             address: $('#addressLabel').text().trim(),
             city: $('#cityLabel').text().trim(),
             transactionTypeCounter: $('#transactionTypeCounterLabel').text().trim(),
-            location: url
+            location: url,
+            user_id: userData.id
         }
         let rules = await orcRules.orcDataObject()
         let validate = await new validatorjs(urlData, rules)
@@ -180,11 +175,11 @@ module.exports = class Orc {
         }
     }
 
-    async orcList() {
+    async orcList(userData) {
         let folderPath = config.ocrUploadPath
         let data
         try {
-            data = await orcModel.orcDataList()
+            data = await orcModel.orcDataList(userData.id)
         } catch (error) {
             return {
                 data: {
@@ -219,10 +214,10 @@ module.exports = class Orc {
     }
 
 
-    async orcListWithSerach(param) {
+    async orcListWithSerach(param, userData) {
         let requestedBy = param.requestedBy ? param.requestedBy : ''
         let tin = param.tin ? param.tin : ''
-        let search = await orcModel.OcrListBysearch(requestedBy, tin).catch((err) => {
+        let search = await orcModel.OcrListBysearch(requestedBy, tin, userData.id).catch((err) => {
             return { error: err }
         })
         if (!search || search.error) {

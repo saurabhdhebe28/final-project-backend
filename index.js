@@ -14,7 +14,7 @@ app.use(cors())
 app.use(fileUpload());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-// console.log(__dirname)
+
 app.use('/auth', authRouter)
 app.use(CheckToken)
 app.use("/offers", offerRoute);
