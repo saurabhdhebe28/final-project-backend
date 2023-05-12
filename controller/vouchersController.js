@@ -102,7 +102,7 @@ module.exports = class voucherController {
         res.status(404).json({ status: 'false', message: 'Data set is empty' })
       }
     } catch (error) {
-      return offerResponse.error400(res, error)
+      return voucherResponse.error400(res, error)
     }
   }
 };

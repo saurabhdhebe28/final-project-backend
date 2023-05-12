@@ -97,7 +97,7 @@ CREATE TABLE `orcData` (
   `createdAt` datetime DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `signedBy` varchar(100) NOT NULL,
-  `location` varchar(255) NOT NULL,
+  `location` LONGTEXT NOT NULL,
   `user_id`  int NOT NULL
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
