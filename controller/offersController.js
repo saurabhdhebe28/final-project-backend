@@ -14,8 +14,8 @@ module.exports = class offerController {
       let validation = new validator(result, rules);
       if (validation.passes()) {
 
-         offerModel.add(result); 
-        offerService.addImg(req, res, result);
+        await offerModel.add(result); 
+       await offerService.addImg(req, res, result);
         return offerResponse.offerAdded(res, result);
       } else {
         res.send({
