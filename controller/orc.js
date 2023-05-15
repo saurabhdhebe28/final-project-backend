@@ -8,22 +8,6 @@ let orcService = new (require('../services/orc'))
 let orcFormatter = new (require('../formatter/orc'))
 module.exports = class Orc {
     constructor() { }
-    async getHtmlTemplate(request, response) {
-        let rules = await orcRules.url()
-        let validate = await new validatorjs(request.body, rules)
-        if (validate.fails()) {
-            return response.send(validate.errors)
-        }
-        let get = await orcService.getHtmlTemplate(request.body.url).catch((err) => {
-            return {
-                error: err
-            }
-        })
-        if (!get || get.error) {
-            response.send(get.data)
-        }
-        response.send(get.data)
-    }
     async addorcFile(request, response) {
         if (!request.files || !request.body.htmlTemplate) {
             return response.send({ status: false, data: 'required Contained Not Found' })
@@ -41,7 +25,7 @@ module.exports = class Orc {
             return response.send({ status: false, data: error })
         }
 
-        let addFile = await orcService.addOcrByfile(data).catch((err) => {
+        let addFile = await orcService.addOcrByfile(data, request.userData).catch((err) => {
             return { error: err }
         })
         if (!addFile || addFile.error) {
@@ -56,10 +40,9 @@ module.exports = class Orc {
         if (validate.fails()) {
             return response.send(validate.errors)
         }
-        let add = await orcService.addUrl(request.body.url).catch((err) => {
+        let add = await orcService.addUrl(request.body.url, request.userData).catch((err) => {
             return { error: err }
         })
-        console.log(add);
         if (!add || add.error) {
             return response.send(add.data)
         }
@@ -68,7 +51,7 @@ module.exports = class Orc {
     }
 
     async orcList(request, response) {
-        let add = await orcService.orcList().catch((err) => {
+        let add = await orcService.orcList(request.userData).catch((err) => {
             return { error: err }
         })
         if (!add || add.error) {
@@ -77,7 +60,7 @@ module.exports = class Orc {
         return response.send(add.data)
     }
     async orcListWithSearch(request, response) {
-        let get = await orcService.orcListWithSerach(request.query).catch((err) => {
+        let get = await orcService.orcListWithSerach(request.query, request.userData).catch((err) => {
             return { error: err }
         })
         if (!get || get.error) {
@@ -99,6 +82,25 @@ module.exports = class Orc {
             }
         })
 
+    }
+
+    async getHeader(request, response) {
+        try {
+            let rules = orcRules.url()
+            let validate = new validatorjs(request.query, rules)
+            if (validate.fails()) {
+                return response.send(validate.errors)
+            }
+        } catch (error) {
+            return response.send({ status: false, data: error })
+        }
+        let getHeader = await orcService.getHeaders(request).catch((err) => {
+            return { error: err }
+        })
+        if (!getHeader || getHeader.error) {
+            return response.send(getHeader.data)
+        }
+        return response.send(getHeader.data)
     }
 }
 
