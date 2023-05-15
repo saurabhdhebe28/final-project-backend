@@ -1,7 +1,6 @@
 const cheerio = require('cheerio')
 let orcRules = new (require('../validation/orc'))
 const validatorjs = require('validatorjs')
-// const { val } = require('cheerio/lib/api/attributes')
 let orcModel = new (require('../model/orc'))
 let moment = require('moment')
 let { createShortUrl } = require('../helper/shortUrl')
@@ -48,10 +47,10 @@ module.exports = class Orc {
         let fileName = fileInfo.name
         let htmlContent = param.htmlTemplate
         let uploadPath = config.ocrUploadPath + fileName
-        let a =uploadPath.split('/')
+        let a = uploadPath.split('/')
         let b = a.reverse()
-        let dbPath = '/'+b[2]+'/'+b[1]+'/'+b[0]
-       
+        let dbPath = '/' + b[2] + '/' + b[1] + '/' + b[0]
+
         let $ = cheerio.load(htmlContent)
         let urlData = {
             requestedBy: $('#requestedByLabel').text().trim(),
@@ -126,7 +125,7 @@ module.exports = class Orc {
             value = await htmlSyntax.text()
 
         } catch (error) {
-            console.log(error,'error')
+            console.log(error, 'error')
             return {
                 data: {
                     status: false,
@@ -222,7 +221,8 @@ module.exports = class Orc {
     async orcListWithSerach(param) {
         let requestedBy = param.requestedBy ? param.requestedBy : ''
         let tin = param.tin ? param.tin : ''
-        let search = await orcModel.OcrListBysearch(requestedBy, tin).catch((err) => {
+        let city = param.city ? param.city : ''
+        let search = await orcModel.OcrListBysearch(requestedBy, tin, city).catch((err) => {
             return { error: err }
         })
         if (!search || search.error) {
