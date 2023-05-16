@@ -216,9 +216,11 @@ module.exports = class Orc {
 
 
     async orcListWithSerach(param, userData) {
+
         let requestedBy = param.requestedBy ? param.requestedBy : ''
         let tin = param.tin ? param.tin : ''
         let city = param.city ? param.city : ''
+
         let search = await orcModel.OcrListBysearch(requestedBy, tin, city, userData.id).catch((err) => {
             return { error: err }
         })
