@@ -1,4 +1,4 @@
-// const { of } = require('rxjs')
+
 let knex = require('../connection/knex')
 module.exports = class orcModel {
     constructor() { }
@@ -8,10 +8,32 @@ module.exports = class orcModel {
     orcDataList(id) {
         return knex.select('requestedBy', 'signedBy', 'totalCounter', 'sdcTime', 'tin', 'locationName', 'address', 'totalAmount', 'city', 'transactionTypeCounter', 'location').from('orcData').where('user_id', id).orderBy('createdAt', 'desc');
     }
-    OcrListBysearch(requestedBy, tin, id) {
+    OcrListBysearch(requestedBy, tin, city, id) {
+        if (requestedBy || tin || city) {
+            if (requestedBy && (!tin && !city)) {
+                return knex.select('requestedBy', 'signedBy', 'totalCounter', 'sdcTime', 'tin', 'locationName', 'address', 'totalAmount', 'city', 'transactionTypeCounter').from('orcData').where({
+                    'requestedBy': requestedBy,
+                    'user_id': id
+                }).orderBy('createdAt', 'desc');
+            }
+            if (tin && (!requestedBy && !city)) {
+                return knex.select('requestedBy', 'signedBy', 'totalCounter', 'sdcTime', 'tin', 'locationName', 'address', 'totalAmount', 'city', 'transactionTypeCounter').from('orcData').where({
+                    'tin': requestedBy,
+                    'user_id': id
+                }).orderBy('createdAt', 'desc');
+            }
+            if (city && (!requestedBy && !tin)) {
+                console.log(city);
+                return knex.select('requestedBy', 'signedBy', 'totalCounter', 'sdcTime', 'tin', 'locationName', 'address', 'totalAmount', 'city', 'transactionTypeCounter').from('orcData').where({
+                    'city': city,
+                    'user_id': id
+                }).orderBy('createdAt', 'desc');
+            }
+        }
 
-        if (requestedBy && tin) {
-            return knex.select('requestedBy', 'signedBy', 'totalCounter', 'sdcTime', 'tin', 'locationName', 'address', 'totalAmount', 'city', 'transactionTypeCounter', 'location').from('orcData').where({
+
+        if (requestedBy && tin && !city) {
+            return knex.select('requestedBy', 'signedBy', 'totalCounter', 'sdcTime', 'tin', 'locationName', 'address', 'totalAmount', 'city', 'transactionTypeCounter').from('orcData').where({
                 'requestedBy': requestedBy,
                 'user_id': id
             }).andWhere({
@@ -19,16 +41,30 @@ module.exports = class orcModel {
                 'user_id': id
             }).orderBy('createdAt', 'desc');
         }
-        if (requestedBy || tin) {
+        if (requestedBy && city && !tin) {
 
             return knex.select('requestedBy', 'signedBy', 'totalCounter', 'sdcTime', 'tin', 'locationName', 'address', 'totalAmount', 'city', 'transactionTypeCounter').from('orcData').where({
                 'requestedBy': requestedBy,
                 'user_id': id
 
-            }).orWhere({
+            }).andWhere({
+                'city': city,
+                'user_id': id
+            }).orderBy('createdAt', 'desc');
+        }
+        if (city && tin && !requestedBy) {
+
+            return knex.select('requestedBy', 'signedBy', 'totalCounter', 'sdcTime', 'tin', 'locationName', 'address', 'totalAmount', 'city', 'transactionTypeCounter').from('orcData').where({
+                'city': city,
+                'user_id': id
+            }).andWhere({
                 'tin': tin,
                 'user_id': id
             }).orderBy('createdAt', 'desc');
+        }
+        if (requestedBy && tin && city) {
+
+            return knex.select('requestedBy', 'signedBy', 'totalCounter', 'sdcTime', 'tin', 'locationName', 'address', 'totalAmount', 'city', 'transactionTypeCounter', 'location').from('orcData').where('requestedBy', requestedBy).where('tin', tin).where('city', city).where('user_id', id).orderBy('createdAt', 'desc');
         }
     }
 
