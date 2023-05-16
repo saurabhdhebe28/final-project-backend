@@ -25,7 +25,8 @@ module.exports = class voucherController {
             error: validation.errors.errors,
           });
       }
-    } catch (error) {
+    } 
+    catch (error) {
       return voucherResponse.error400(res, error);
     }
   }

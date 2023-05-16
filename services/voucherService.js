@@ -5,11 +5,10 @@ const voucherModel = new (require('../model/voucherModel'))
 module.exports = class voucherService {
   constructor() { }
 
-
   async addData(req, res) {
     try {
       let data
-      let res=  voucherResponse.voucherAdded(data)
+      let res =  voucherResponse.voucherAdded(data)
       return res
     }
     catch (error) {
