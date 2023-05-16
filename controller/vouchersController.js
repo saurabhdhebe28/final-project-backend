@@ -81,6 +81,7 @@ module.exports = class voucherController {
         if(result[0].status=='Available'){
           await voucherModel.updateStatus(req);
           const data = await voucherModel.getPurchasedVoucher();
+          
           res.send({ status: 'true', data, message: 'Voucher redeemed succesfully' })
         } else if (result[0].status == 'Unavailable') {
           res.send({ status: 'true', data, message: ' Voucher already redeemed' })
