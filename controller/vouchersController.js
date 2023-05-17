@@ -67,7 +67,6 @@ module.exports = class voucherController {
   async getChart(req,res){
     try{
       const data = await voucherModel.getByMonth()
-      console.log(data);
       return res.status(200).json({status:'true',data:data[0]})
     }
     catch(error){

@@ -76,7 +76,7 @@ module.exports = class voucherModel {
     }
 
     getByMonth(){
-        return knex.raw(' SELECT MONTH(createdAt) AS month, COUNT(*) AS count FROM purchase_voucher GROUP BY MONTH(createdAt) ORDER BY MONTH(createdAt);')
+        return knex.raw(`SELECT MONTH(updatedAt) AS month, COUNT(*) AS count FROM purchase_voucher WHERE status='Unavailable' GROUP BY MONTH(updatedAt) ORDER BY MONTH(updatedAt);`)
         
     }
 }

@@ -1,4 +1,5 @@
 const validator = require("validatorjs");
+const voucherResponse = require("../responses/voucherResponse");
 const offerFormatter = new (require("../formatter/offersFormatter"))();
 const offerValidation = new (require("../validation/offersValidations"))();
 const offerResponse = new (require("../responses/offersResponse"))();
@@ -60,6 +61,15 @@ module.exports = class offerController {
     }
   }
 
+  async getChart(req,res){
+    try{
+      const data = await offerModel.getByMonth()
+      return res.status(200).json({status:'true',data:data[0]})
+    }
+    catch(error){
+      return offerResponse.error400(res,error)
+    }
+  }
   async getAssign(req, res) {
     try {
       const data = await offerModel.getAssigned()
