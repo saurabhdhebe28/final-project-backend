@@ -17,15 +17,9 @@ module.exports = class voucherController {
         await voucherService.addImage(req, res);
         return voucherResponse.voucherAdded(res, data);
       } else {
-        res
-          .status(400)
-          .send({
-            status: false,
-            message: "Voucher not added",
-            error: validation.errors.errors,
-          });
+        res.status(400).send({status: false,message: "Voucher not added",error: validation.errors.errors});
       }
-    } 
+    }
     catch (error) {
       return voucherResponse.error400(res, error);
     }
@@ -37,10 +31,7 @@ module.exports = class voucherController {
       if (result) {
         return voucherResponse.success(res, result);
       } else {
-        return res.send({
-          status: "false",
-          message: "No Data in Voucher Table",
-        });
+        return res.send({status: "false",message: "No Data in Voucher Table"});
       }
     } catch (error) {
       return voucherResponse.error400(res, error);
@@ -73,16 +64,25 @@ module.exports = class voucherController {
       return voucherResponse.error400(res, error)
     }
   }
-
+  async getChart(req,res){
+    try{
+      const data = await voucherModel.getByMonth()
+      console.log(data);
+      return res.status(200).json({status:'true',data:data[0]})
+    }
+    catch(error){
+      return voucherResponse.error400(res,error)
+    }
+  }
 
   async redeemVoucher(req, res) {
     try {
       const result = await voucherModel.getById(req);
-      if(result){
-        if(result[0].status=='Available'){
+      if (result) {
+        if (result[0].status == 'Available') {
           await voucherModel.updateStatus(req);
           const data = await voucherModel.getPurchasedVoucher();
-          
+
           res.send({ status: 'true', data, message: 'Voucher redeemed succesfully' })
         } else if (result[0].status == 'Unavailable') {
           res.send({ status: 'true', data, message: ' Voucher already redeemed' })

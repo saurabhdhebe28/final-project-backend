@@ -74,4 +74,9 @@ module.exports = class voucherModel {
         .innerJoin('users', 'users.id', 'purchase_voucher.user_id')
         .innerJoin('voucher', 'voucher.voucher_id', 'purchase_voucher.voucher_id').where("status", "Unavailable").orderBy('purchase_voucher_id','desc')
     }
+
+    getByMonth(){
+        return knex.raw(' SELECT MONTH(createdAt) AS month, COUNT(*) AS count FROM purchase_voucher GROUP BY MONTH(createdAt) ORDER BY MONTH(createdAt);')
+        
+    }
 }

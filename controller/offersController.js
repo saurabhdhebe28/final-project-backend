@@ -14,8 +14,8 @@ module.exports = class offerController {
       let validation = new validator(result, rules);
       if (validation.passes()) {
 
-        await offerModel.add(result); 
-       await offerService.addImg(req, res, result);
+        await offerModel.add(result);
+        await offerService.addImg(req, res, result);
         return offerResponse.offerAdded(res, result);
       } else {
         res.send({
@@ -33,9 +33,9 @@ module.exports = class offerController {
     try {
       const result = await offerModel.getAll();
       if (result) {
-       return offerResponse.success(res, result);
+        return offerResponse.success(res, result);
       } else {
-       return res.send({
+        return res.send({
           status: "false",
           message: "No Data in Offers Table",
         });
@@ -64,9 +64,9 @@ module.exports = class offerController {
     try {
       const data = await offerModel.getAssigned()
       if (data) {
-       return res.status(200).json({ status: true, data, message: 'Fetched assigned offer succesfully' });
+        return res.status(200).json({ status: true, data, message: 'Fetched assigned offer succesfully' });
       } else {
-       return res.status(404).json({ status: 'false', message: 'Data set is empty' })
+        return res.status(404).json({ status: 'false', message: 'Data set is empty' })
       }
     } catch (error) {
       return offerResponse.error400(res, error)
