@@ -58,7 +58,7 @@ module.exports = class offerModel {
 
   getByMonth(){
     return knex.raw(`SELECT MONTH(updatedAt) AS month, COUNT(*) AS count FROM purchase_offer WHERE status='Unavailable' GROUP BY MONTH(updatedAt) ORDER BY MONTH(updatedAt);`)
-    
+  
 }
   updateStatus(req) {
     return knex.select('*')
