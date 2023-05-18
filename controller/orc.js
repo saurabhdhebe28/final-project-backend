@@ -20,8 +20,8 @@ module.exports = class Orc {
             if (validate.fails()) {
                 return response.send(validate.errors)
             }
-        } catch (error) {
-
+        } 
+        catch (error) {
             return response.send({ status: false, data: error })
         }
 

@@ -19,9 +19,3 @@ module.exports = class authRules {
         return returnData
     }
 }
-
-
-
-
-
-

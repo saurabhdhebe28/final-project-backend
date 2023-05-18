@@ -8,7 +8,7 @@ router.post('/assign-voucher', voucherController.assignVoucher);
 router.get('/get-assigned-voucher', voucherController.purchasedVoucher);
 router.post('/redeem-voucher', voucherController.redeemVoucher);
 router.get('/redeem-list', voucherController.redeemList);
-
+router.get('/get-by-month',voucherController.getChart)
 
 
 module.exports = router
