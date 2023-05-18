@@ -67,7 +67,7 @@ module.exports = class voucherController {
   async getChart(req,res){
     try{
       const data = await voucherModel.getByMonth()
-      return res.status(200).json({status:'true',data:data[0]})
+      return res.status(200).json({status:'true',data:data})
     }
     catch(error){
       return voucherResponse.error400(res,error)

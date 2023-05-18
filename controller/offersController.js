@@ -64,7 +64,7 @@ module.exports = class offerController {
   async getChart(req,res){
     try{
       const data = await offerModel.getByMonth()
-      return res.status(200).json({status:'true',data:data[0]})
+      return res.status(200).json({status:'true',data:data})
     }
     catch(error){
       return offerResponse.error400(res,error)
