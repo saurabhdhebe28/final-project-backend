@@ -30,7 +30,7 @@ module.exports = class Orc {
       },
     };
   }
-  // Roshni dhadke
+  // Roshni dhebe
   async addOcrByfile(param, userData) {
     if (!param.file || !param.htmlTemplate || typeof param.file != "object") {
       return {
