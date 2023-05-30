@@ -25,11 +25,41 @@ const errorLogger = winston.createLogger({
   ],
 });
 
+// const errorLogger = winston.createLogger({
+//   level: 'error',
+//     defaultMeta: { service: 'rule-engine' },
+//     format: winston.format.combine(
+//       winston.format.timestamp({
+//         format: 'YYYY-MM-DD HH:mm:ss'
+//       }),
+//       winston.format.errors({ stack: true }),
+//       winston.format.json()
+//     ),
+//     transports: [
+//       new winston.transports.File({
+//         filename: path.join(__dirname, '..', 'logs', 'errors.log')
+//       })
+//     ]
+//   });
+
+//   const logger = createLogger({
+//     level: 'info',
+//     format: combine(
+//       timestamp(),
+//       myFormat
+//       ),
+//       transports: [
+//         new winston.transports.File({
+//           filename: path.join(__dirname, '..', 'logs', 'combined.log')
+//         })
+//       ]
+//     });
+
 app.use((err, req, res, next) => {
   errorLogger.error(err.message);
   next(err);
 });
-
+//hi
 app.use(cors());
 app.use(fileUpload());
 app.use(express.urlencoded({ extended: false }));
